@@ -4,10 +4,27 @@ const db = require('../config/db'); // Importa a conexão com o banco de dados
 // Função para cadastrar prestador
 exports.registerManager = async (req, res) => {
   try {
-    const { nome, email, senha, telefone, cpf_cnpj, atividade, servico, logo_base64, social_media, website, cidade, estado, ritmo_trabalho } = req.body;
+    const { 
+      nome, 
+      email, 
+      senha, 
+      telefone, 
+      cpf_cnpj, 
+      atividade, 
+      servico, 
+      logo_base64, 
+      social_media, 
+      website, 
+      cidade, 
+      estado, 
+      ritmo_trabalho, 
+      categoria_id,
+      subcategoria_id,
+      tipo_agenda
+    } = req.body;
 
     // Validação básica dos campos
-    if (!nome || !email || !senha || !telefone || !cpf_cnpj || !servico || !logo_base64 || !cidade || !estado || !ritmo_trabalho) {
+    if (!nome || !email || !senha || !telefone || !cpf_cnpj || !servico || !logo_base64 || !cidade || !estado || !ritmo_trabalho || !categoria_id || !subcategoria_id ) {
       return res.status(400).json({ message: 'Por favor, preencha todos os campos obrigatórios.' });
     }
 
@@ -48,8 +65,8 @@ exports.registerManager = async (req, res) => {
 
     // Query SQL para inserir um novo usuário
     const queryUsuario = `
-      INSERT INTO ${process.env.DB_SCHEMA}.usuarios (nome, email, senha, telefone, tipo_usuario, cidade_id, criado_em)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO ${process.env.DB_SCHEMA}.usuarios (nome, email, senha, telefone, tipo_usuario, cidade_id, criado_em, ativo)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING id;
     `;
 
@@ -60,7 +77,8 @@ exports.registerManager = async (req, res) => {
       telefone,
       'prestador', // Tipo de usuário é 'prestador'
       cidadeId, // ID da cidade
-      new Date() // Data de criação
+      new Date(), // Data de criação
+      true // Ativo
     ];
 
     // Executa a query de inserção na tabela `usuarios`
@@ -69,8 +87,8 @@ exports.registerManager = async (req, res) => {
 
     // Query SQL para inserir na tabela `prestadores` com o ID do usuário
     const queryPrestador = `
-      INSERT INTO ${process.env.DB_SCHEMA}.prestadores (usuario_id, cpf_cnpj, atividade, services, logo, instagram, website, criado_em)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      INSERT INTO ${process.env.DB_SCHEMA}.prestadores (usuario_id, cpf_cnpj, atividade, services, logo, instagram, website, criado_em, atualizado_em, listado, ativo, tipo_agenda, subcategoria_id, categoria_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       RETURNING *;
     `;
 
@@ -82,7 +100,13 @@ exports.registerManager = async (req, res) => {
       logo_base64,      // String base64 para o logotipo
       social_media,     // Instagram ou outras redes sociais
       website,
-      new Date()        // Data de criação
+      new Date(),       // Data de criação
+      null,             // atualizado_em, inicialmente null
+      true,             // listado
+      true,             // ativo
+      tipo_agenda,
+      subcategoria_id,
+      categoria_id
     ];
 
     // Executa a query de inserção na tabela `prestadores`
@@ -105,7 +129,7 @@ exports.registerManager = async (req, res) => {
       SELECT u.*, p.*, r.*
       FROM ${process.env.DB_SCHEMA}.usuarios u
       JOIN ${process.env.DB_SCHEMA}.prestadores p ON u.id = p.usuario_id
-      JOIN ${process.env.DB_SCHEMA}.ritmo_trabalho r ON p.id = r.prestador_id
+      LEFT JOIN ${process.env.DB_SCHEMA}.ritmo_trabalho r ON p.id = r.prestador_id
       WHERE u.id = $1
     `;
 
@@ -123,12 +147,12 @@ exports.registerManager = async (req, res) => {
     // Em caso de erro, faz o rollback da transação
     await db.query('ROLLBACK');
 
-    // Tratamento DE ERROS ESPECÍFICOS - VAMOS FAZER UMA FUNÇÃO PARA ISSO COM SWITCH CASE ETC , por enquanto vai ficar assim
+    // Tratamento de erros específicos
     if (error.code === '23505' && error.constraint === 'usuarios_email_key') {
       return res.status(409).json({
         message: 'O email fornecido já está em uso. Por favor, utilize outro email.',
       });
-    }else if(error.code === '23505' && error.constraint === 'prestadores_cpf_cnpj_key'){
+    } else if (error.code === '23505' && error.constraint === 'prestadores_cpf_cnpj_key') {
       return res.status(409).json({
         message: 'O CPF fornecido já está em uso. Por favor, utilize outro CPF.',
       });
