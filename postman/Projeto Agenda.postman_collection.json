@@ -199,6 +199,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Obter disponibilidade de um prestador para um dia da semana",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/management/disponibilidade/62/segunda",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"management",
+						"disponibilidade",
+						"62",
+						"segunda"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
