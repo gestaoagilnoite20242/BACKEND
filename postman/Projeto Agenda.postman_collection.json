@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b1d90b5f-5297-4f86-ab09-45b93e59a2ff",
+		"_postman_id": "f6ce5d26-12c2-45f8-ab3e-2a0e59be72db",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37237236"
+		"_exporter_id": "38317233"
 	},
 	"item": [
 		{
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"rosi.cardoso99@example.com\",\r\n  \"password\": \"senhaSegura123\"\r\n}\r\n",
+					"raw": "{\r\n  \"email\": \"rosi.cardoso4@example.com\",\r\n  \"password\": \"senhaSegura123\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -73,7 +73,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"nome\": \"Rosi Cardoso\",\r\n  \"email\": \"rosi.cardoso99@example.com\",\r\n  \"senha\": \"senhaSegura123\",\r\n  \"telefone\": \"11999999999\",\r\n  \"cpf_cnpj\": \"1234429923423401\",\r\n  \"atividade\": \"Professora\",\r\n  \"servico\": \"Aulas particulares\",\r\n  \"logo_base64\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string\",\r\n  \"social_media\": \"https://instagram.com/RosiRosi\",\r\n  \"website\": \"https://Rosi.com.br\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": {\r\n    \"nome\": \"São Paulo\",\r\n    \"sigla\": \"SP\"\r\n  },\r\n  \"ritmo_trabalho\": [\r\n    {\r\n      \"dia_semana\": \"segunda\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"terça\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    }\r\n  ],\r\n  \"categoria_id\": 1,\r\n  \"subcategoria_id\": 2,\r\n  \"tipo_agenda\": null\r\n}\r\n",
+					"raw": "{\r\n  \"nome\": \"Rosi Cardoso\",\r\n  \"email\": \"rosi.cardoso4@example.com\",\r\n  \"senha\": \"senhaSegura123\",\r\n  \"telefone\": \"11999999999\",\r\n  \"cpf_cnpj\": \"1234423923423402\",\r\n  \"atividade\": \"Professora\",\r\n  \"servico\": \"Aulas particulares\",\r\n  \"logo_base64\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string\",\r\n  \"social_media\": \"https://instagram.com/RosiRosi\",\r\n  \"website\": \"https://Rosi.com.br\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": {\r\n    \"nome\": \"São Paulo\",\r\n    \"sigla\": \"SP\"\r\n  },\r\n  \"ritmo_trabalho\": [\r\n    {\r\n      \"dia_semana\": \"segunda\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"terça\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    }\r\n  ],\r\n  \"categoria_id\": 1,\r\n  \"subcategoria_id\": 2,\r\n  \"tipo_agenda\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -91,6 +91,73 @@
 						"api",
 						"management",
 						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter agendamentos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/management/agendamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"management",
+						"agendamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter agendamentos por id de prestador",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/management/agendamentos/62",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"management",
+						"agendamentos",
+						"62"
 					]
 				}
 			},
