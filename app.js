@@ -6,6 +6,7 @@ dotenv.config();
 const authRoutes = require("./routes/authRoutes");
 const managementRoutes = require("./routes/managerRoutes");
 const agendamentosRoutes = require("./routes/agendamentosRoutes");
+const disponibilidadeRoutes = require("./routes/disponibilidadeRoutes");
 const { testConnection } = require("./config/db"); // Importa a função de teste de conexão
 
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api/management", authRoutes);
 app.use("/api/management", managementRoutes);
 app.use("/api/management", agendamentosRoutes);
+app.use("/api/management", disponibilidadeRoutes);
 
 const PORT = process.env.PORT || 3000;
 
