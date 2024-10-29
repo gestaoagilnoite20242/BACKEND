@@ -1,7 +1,7 @@
 const db = require('../config/db'); // Importa a conexão com o banco de dados
 
 // Consulta SQL base para buscar agendamentos com detalhes de cliente e prestador
-const queryBase = `
+const queryBaseAgend = `
   SELECT 
     a.id as agendamento_id
     ,a.cliente_id
@@ -69,13 +69,13 @@ function formatAgendamento(row) {
 
 
 // Função para buscar agendamentos pelo ID do prestador
-exports.getAgendamentosByPrestadorId = async (req, res) => {
+exports.getAgendByPrestId = async (req, res) => {
   const { prestador_id } = req.params;
 
   try {
 
     const queryWithParameter = `
-      ${queryBase}
+      ${queryBaseAgend}
       WHERE
         a.prestador_id = $1;
       `;
@@ -87,6 +87,7 @@ exports.getAgendamentosByPrestadorId = async (req, res) => {
 
     res.status(200).json({
       message: 'Agendamentos obtidos com sucesso!',
+      count: rows.length,
       agendamentos: agendamentos,
     });
   } catch (error) {
@@ -95,19 +96,61 @@ exports.getAgendamentosByPrestadorId = async (req, res) => {
   }
 };
 
-// Função para buscar agendamentos
-exports.getAgendamentos = async (req, res) => {
+// Função para buscar agendamentos pelo ID do prestador e um intervalo de tempo
+exports.getAgendByPrestIdBetween = async (req, res) => {
+  const { prestador_id } = req.params;
+  const { data_inicio } = req.params;
+  const { data_fim } = req.params;
 
   try {
 
-    const query = `${queryBase};`;
+    const queryWithParameter = `
+      ${queryBaseAgend}
+      WHERE
+        a.prestador_id = $1
+        and a.data_agendamento >= $2
+        and a.data_agendamento <= $3
+      ;
+      `;
 
-    const { rows } = await db.query(query);
+    const values = [prestador_id, data_inicio, data_fim];
+    const { rows } = await db.query(queryWithParameter, values);
 
     const agendamentos = rows.map(formatAgendamento);
 
     res.status(200).json({
       message: 'Agendamentos obtidos com sucesso!',
+      count: rows.length,
+      agendamentos: agendamentos,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar agendamentos:", error);
+    res.status(500).json({ message: 'Erro ao buscar agendamentos.', error: error.message });
+  }
+};
+
+// Função para buscar agendamentos futuros por um ID do prestador
+exports.getAgendFuturByPrestId = async (req, res) => {
+  const { prestador_id } = req.params;
+
+  try {
+
+    const queryWithParameter = `
+      ${queryBaseAgend}
+      where
+	      a.data_agendamento >= CURRENT_TIMESTAMP
+        and  a.prestador_id = $1
+      ;
+      `;
+
+    const values = [prestador_id];
+    const { rows } = await db.query(queryWithParameter, values);
+
+    const agendamentos = rows.map(formatAgendamento);
+
+    res.status(200).json({
+      message: 'Agendamentos obtidos com sucesso!',
+      count: rows.length,
       agendamentos: agendamentos,
     });
   } catch (error) {
