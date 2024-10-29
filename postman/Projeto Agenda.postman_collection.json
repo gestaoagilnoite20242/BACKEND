@@ -182,7 +182,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/agendamentos/62/'2024-10-28'/'2024-10-28'",
+					"raw": "http://localhost:3000/api/management/agendamentos/62/2024-10-28/2024-10-28",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -193,8 +193,38 @@
 						"management",
 						"agendamentos",
 						"62",
-						"'2024-10-28'",
-						"'2024-10-28'"
+						"2024-10-28",
+						"2024-10-28"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir agendamento no banco",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 62,\r\n  \"data_agendamento\": \"2024-10-28\",\r\n  \"hora_inicio\": \"08:00\",\r\n  \"hora_fim\": \"08:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/management/agendamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"management",
+						"agendamentos"
 					]
 				}
 			},

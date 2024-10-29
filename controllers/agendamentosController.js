@@ -1,5 +1,6 @@
 const db = require('../config/db'); // Importa a conexão com o banco de dados
 
+
 // Consulta SQL base para buscar agendamentos com detalhes de cliente e prestador
 const queryBaseAgend = `
   SELECT 
@@ -98,9 +99,7 @@ exports.getAgendByPrestId = async (req, res) => {
 
 // Função para buscar agendamentos pelo ID do prestador e um intervalo de tempo
 exports.getAgendByPrestIdBetween = async (req, res) => {
-  const { prestador_id } = req.params;
-  const { data_inicio } = req.params;
-  const { data_fim } = req.params;
+  const { prestador_id, data_inicio, data_fim } = req.params;
 
   try {
 
@@ -156,5 +155,96 @@ exports.getAgendFuturByPrestId = async (req, res) => {
   } catch (error) {
     console.error("Erro ao buscar agendamentos:", error);
     res.status(500).json({ message: 'Erro ao buscar agendamentos.', error: error.message });
+  }
+};
+
+
+// Função para inserir um novo agendamento
+exports.postAgendamento = async (req, res) => {
+  const { cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status } = req.body;
+
+  if (!cliente_id || !prestador_id || !data_agendamento) {
+    return res.status(400).json({ message: 'Os campos cliente_id, prestador_id e data_agendamento são obrigatórios.' });
+  }
+
+  try {
+   // Mapeamento de números para dias da semana em português
+   const diasSemanaMap = {
+    0: "domingo",
+    1: "segunda",
+    2: "terça",
+    3: "quarta",
+    4: "quinta",
+    5: "sexta",
+    6: "sábado"
+  };
+
+  // Cria uma nova data e obtém o dia da semana
+  const data = new Date(data_agendamento + 'T00:00:00-03:00'); // Ajustando para o fuso horário de Brasília
+  const diaSemana = diasSemanaMap[data.getUTCDay()]; // Usando getUTCDay para corresponder ao fuso horário
+    
+
+
+    // Query para verificar o horário de atendimento do prestador para o dia da semana
+    const queryCheckAvailability = `
+      SELECT 
+        b.dia_semana,
+        b.hora_inicio,
+        b.hora_fim
+      FROM 
+        ${process.env.DB_SCHEMA}.prestadores AS a
+      INNER JOIN 
+        ${process.env.DB_SCHEMA}.ritmo_trabalho AS b ON a.id = b.prestador_id
+      WHERE 
+        a.id = $1
+        AND b.dia_semana = $2;
+    `;
+
+    const availabilityValues = [prestador_id, diaSemana];
+
+    const { rows: availabilityRows } = await db.query(queryCheckAvailability, availabilityValues);
+
+    // Verifica se encontrou disponibilidade para o dia da semana
+    if (availabilityRows.length === 0) {
+      return res.status(400).json({ message: 'O prestador não atende no dia selecionado.' });
+    }
+
+    const { hora_inicio: horarioInicio, hora_fim: horarioFim } = availabilityRows[0];
+
+    // Converte os horários de atendimento para o formato HH:MM
+    const convertToHHMM = (time) => {
+      return time.slice(0, 5); // Pega apenas HH:MM dos horários no formato HH:MM:SS
+    };
+
+    // Converte os horários de atendimento
+    const horarioInicioFormatado = convertToHHMM(horarioInicio);
+    const horarioFimFormatado = convertToHHMM(horarioFim);
+
+    if (hora_inicio < horarioInicioFormatado || hora_fim > horarioFimFormatado) {
+      return res.status(400).json({ message: 'O horário do agendamento está fora do horário de atendimento do prestador.' });
+    }    
+
+    // Query de inserção do agendamento
+    const queryInsert = `
+      INSERT INTO ${process.env.DB_SCHEMA}.agendamentos 
+        (cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status, criado_em, atualizado_em)
+      VALUES 
+        ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+      RETURNING *;
+    `;
+
+    const insertValues = [cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status];
+    const { rows } = await db.query(queryInsert, insertValues);
+
+    // Formata o agendamento antes de retornar
+    const agendamento = formatAgendamento(rows[0]);
+
+    res.status(201).json({
+      message: 'Agendamento inserido com sucesso!',
+      agendamento: agendamento,
+    });
+  } catch (error) {
+    console.error("Erro ao inserir agendamento:", error);
+    res.status(500).json({ message: 'Erro ao inserir agendamento.', error: error.message });
   }
 };

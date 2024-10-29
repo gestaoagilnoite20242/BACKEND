@@ -28,8 +28,7 @@ function formatDisponibilidade(row) {
 
 // Função para buscar a disponibilidade de um prestator por ID
 exports.getDispByPrestIdDay = async (req, res) => {
-  const { prestador_id } = req.params;
-  const { dia_da_semana } = req.params;
+  const { prestador_id, dia_da_semana } = req.params;
 
   try {
 
