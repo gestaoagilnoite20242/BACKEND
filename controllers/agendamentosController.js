@@ -163,8 +163,8 @@ exports.getAgendFuturByPrestId = async (req, res) => {
 exports.postAgendamento = async (req, res) => {
   const { cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status } = req.body;
 
-  if (!cliente_id || !prestador_id || !data_agendamento) {
-    return res.status(400).json({ message: 'Os campos cliente_id, prestador_id e data_agendamento são obrigatórios.' });
+  if (!cliente_id || !prestador_id || !data_agendamento || !hora_inicio || !hora_fim) {
+    return res.status(400).json({ message: 'Os campos cliente_id, prestador_id, data_agendamento, hora_inicio e hora_fim são obrigatórios.' });
   }
 
   try {
