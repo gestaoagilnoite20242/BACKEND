@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f6ce5d26-12c2-45f8-ab3e-2a0e59be72db",
+		"_postman_id": "c42e72ea-4c10-4698-ae18-a3833e4d2bbc",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "38317233"
+		"_exporter_id": "1459536"
 	},
 	"item": [
 		{
@@ -159,6 +159,40 @@
 						"management",
 						"agendamentos",
 						"62"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter agendamentos por id de agendamento",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/management/agendamento/29",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"management",
+						"agendamento",
+						"29"
 					]
 				}
 			},

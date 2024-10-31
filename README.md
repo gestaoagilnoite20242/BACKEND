@@ -64,7 +64,7 @@ DB_SCHEMA=agenda
 
 5 - Uma vez criado o arquivo .env, certifique-se de executar no Postgres a criação da database, de acordo com as informações contidas no arquivo .env (para conexão com o banco de dados oficial da API, será necessário solicitar os dados de conexão ao administrador da API)
 
-6 - Novamente dentro da IDE, execute o seguinte comando no terminal: node app.js
+6 - Novamente dentro da IDE, execute o seguinte comando no terminal: npm start
 
 7 - Caso a conexão com o banco de dados for bem-sucedida, aparecerá uma mensagem de êxito no terminal, e você poderá testar os endpoints no Postman.
 
