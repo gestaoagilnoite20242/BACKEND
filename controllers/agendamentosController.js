@@ -35,7 +35,6 @@ const queryBaseAgend = `
     ${process.env.DB_SCHEMA}.usuarios AS d ON c.usuario_id = d.id
   `;
 
-
 function formatAgendamento(row) {
   return {
     agendamento: {
@@ -96,6 +95,35 @@ exports.getAgendByPrestId = async (req, res) => {
     res.status(500).json({ message: 'Erro ao buscar agendamentos.', error: error.message });
   }
 };
+
+// Função para buscar um agendamento pelo ID
+exports.getAgendById = async (req, res) => {
+  const { agendamento_id } = req.params;
+
+  try {
+
+    const queryWithParameter = `
+      ${queryBaseAgend}
+      WHERE
+        a.id = $1;
+      `;
+
+    const values = [agendamento_id];
+    const { rows } = await db.query(queryWithParameter, values);
+
+    const agendamento = rows.map(formatAgendamento);
+
+    res.status(200).json({
+      message: 'Agendamento obtido com sucesso!',
+      count: rows.length,
+      agendamentos: agendamento,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar agendamento:", error);
+    res.status(500).json({ message: 'Erro ao buscar agendamento.', error: error.message });
+  } 
+};
+
 
 // Função para buscar agendamentos pelo ID do prestador e um intervalo de tempo
 exports.getAgendByPrestIdBetween = async (req, res) => {
@@ -248,3 +276,4 @@ exports.postAgendamento = async (req, res) => {
     res.status(500).json({ message: 'Erro ao inserir agendamento.', error: error.message });
   }
 };
+
