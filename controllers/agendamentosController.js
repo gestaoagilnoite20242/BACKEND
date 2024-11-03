@@ -67,6 +67,21 @@ function formatAgendamento(row) {
   };
 }
 
+function formatAgendamentoAtualizado(row){
+  return {
+    agendamento: {
+      id: row.agendamento_id,
+      data_agendamento: row.data_agendamento,
+      hora_inicio: row.hora_inicio,
+      hora_fim: row.hora_fim,
+      assunto: row.assunto,
+      status: row.status,
+      criado_em: row.criado_em,
+      atualizado_em: row.atualizado_em,
+    }
+  };
+}
+
 
 // Função para buscar agendamentos pelo ID do prestador
 exports.getAgendByPrestId = async (req, res) => {
@@ -121,7 +136,7 @@ exports.getAgendById = async (req, res) => {
   } catch (error) {
     console.error("Erro ao buscar agendamento:", error);
     res.status(500).json({ message: 'Erro ao buscar agendamento.', error: error.message });
-  } 
+  }
 };
 
 
@@ -196,21 +211,21 @@ exports.postAgendamento = async (req, res) => {
   }
 
   try {
-   // Mapeamento de números para dias da semana em português
-   const diasSemanaMap = {
-    0: "domingo",
-    1: "segunda",
-    2: "terça",
-    3: "quarta",
-    4: "quinta",
-    5: "sexta",
-    6: "sábado"
-  };
+    // Mapeamento de números para dias da semana em português
+    const diasSemanaMap = {
+      0: "domingo",
+      1: "segunda",
+      2: "terça",
+      3: "quarta",
+      4: "quinta",
+      5: "sexta",
+      6: "sábado"
+    };
 
-  // Cria uma nova data e obtém o dia da semana
-  const data = new Date(data_agendamento + 'T00:00:00-03:00'); // Ajustando para o fuso horário de Brasília
-  const diaSemana = diasSemanaMap[data.getUTCDay()]; // Usando getUTCDay para corresponder ao fuso horário
-    
+    // Cria uma nova data e obtém o dia da semana
+    const data = new Date(data_agendamento + 'T00:00:00-03:00'); // Ajustando para o fuso horário de Brasília
+    const diaSemana = diasSemanaMap[data.getUTCDay()]; // Usando getUTCDay para corresponder ao fuso horário
+
 
 
     // Query para verificar o horário de atendimento do prestador para o dia da semana
@@ -250,7 +265,7 @@ exports.postAgendamento = async (req, res) => {
 
     if (hora_inicio < horarioInicioFormatado || hora_fim > horarioFimFormatado) {
       return res.status(400).json({ message: 'O horário do agendamento está fora do horário de atendimento do prestador.' });
-    }    
+    }
 
     // Query de inserção do agendamento
     const queryInsert = `
@@ -277,3 +292,61 @@ exports.postAgendamento = async (req, res) => {
   }
 };
 
+// Função para atualizar um agendamento
+exports.putAgendamento = async (req, res) => {
+  const { cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status } = req.body;
+  const { agendamento_id } = req.params;
+
+  if (!cliente_id & !prestador_id & !data_agendamento & !hora_inicio & !hora_fim) {
+    return res.status(400).json({ message: 'Os campos cliente_id ou prestador_id ou data_agendamento ou hora_inicio e hora_fim são necessarios.' });
+  }
+
+  try {
+
+    const queryWithParameter = `
+      ${queryBaseAgend}
+      WHERE
+        a.id = $1;
+      `;
+
+    const values = [agendamento_id];
+    const { rows } = await db.query(queryWithParameter, values);
+
+    const agendamento = rows.map(formatAgendamento);
+
+    if (agendamento.length > 0) {
+
+      // Query de update do agendamento
+      const queryUpdate = `
+      UPDATE ${process.env.DB_SCHEMA}.agendamentos SET
+        cliente_id = $1, 
+        prestador_id = $2, 
+        data_agendamento = $3, 
+        hora_inicio = $4, 
+        hora_fim = $5, 
+        assunto = $6, 
+        status = $7, 
+        atualizado_em = CURRENT_TIMESTAMP
+      WHERE
+        agendamentos.id = $8
+      RETURNING *;
+      `;
+
+      const insertValues = [cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status, agendamento_id];
+      const { rows } = await db.query(queryUpdate, insertValues);
+
+      // Formata o agendamento antes de retornar
+      const agendamento_atualizado = formatAgendamentoAtualizado(rows[0]);
+
+      res.status(200).json({
+        message: 'Agendamento atualizado com sucesso!',
+        agendamento: agendamento_atualizado,
+      });
+    } else {
+      return res.status(404).json({ message: 'Agendamento não encontrado.' });
+    }
+
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao buscar agendamento.' });
+  }
+}
