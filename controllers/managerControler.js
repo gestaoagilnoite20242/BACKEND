@@ -23,10 +23,15 @@ exports.registerManager = async (req, res) => {
       tipo_agenda
     } = req.body;
 
-    // Validação básica dos campos
-    if (!nome || !email || !senha || !telefone || !cpf_cnpj || !servico || !logo_base64 || !cidade || !estado || !ritmo_trabalho || !categoria_id || !subcategoria_id ) {
+    // Validação básica dos campos obrigatórios
+    if (!nome || !senha || !telefone || !cpf_cnpj || !servico || !logo_base64 || !cidade || !estado || !ritmo_trabalho || !categoria_id || !subcategoria_id ) {
       return res.status(400).json({ message: 'Por favor, preencha todos os campos obrigatórios.' });
     }
+
+    // // Verifica se o email é fornecido
+    // if (email && !isEmailValid(email)) {
+    //   return res.status(400).json({ message: 'Email inválido.' });
+    // }
 
     // Criptografar a senha
     const hashedPassword = bcrypt.hashSync(senha, 8);
@@ -63,7 +68,7 @@ exports.registerManager = async (req, res) => {
       cidadeId = cidadeResult.rows[0].id;
     }
 
-    // Query SQL para inserir um novo usuário
+    // Query SQL para inserir um novo usuário (email agora pode ser NULL)
     const queryUsuario = `
       INSERT INTO ${process.env.DB_SCHEMA}.usuarios (nome, email, senha, telefone, tipo_usuario, cidade_id, criado_em, ativo)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -72,9 +77,9 @@ exports.registerManager = async (req, res) => {
 
     const valuesUsuario = [
       nome,
-      email,
+      email || null, // Permite que o email seja NULL
       hashedPassword,
-      telefone,
+      telefone, // Telefone obrigatório e único
       'prestador', // Tipo de usuário é 'prestador'
       cidadeId, // ID da cidade
       new Date(), // Data de criação
@@ -96,7 +101,7 @@ exports.registerManager = async (req, res) => {
       usuarioId,
       cpf_cnpj,
       atividade,
-      servico,          // Aqui você deve ajustar o campo para o tipo de serviço
+      servico,          // Ajusta o campo para o tipo de serviço
       logo_base64,      // String base64 para o logotipo
       social_media,     // Instagram ou outras redes sociais
       website,
@@ -148,13 +153,13 @@ exports.registerManager = async (req, res) => {
     await db.query('ROLLBACK');
 
     // Tratamento de erros específicos
-    if (error.code === '23505' && error.constraint === 'usuarios_email_key') {
+    if (error.code === '23505' && error.constraint === 'usuarios_telefone_key') {
       return res.status(409).json({
-        message: 'O email fornecido já está em uso. Por favor, utilize outro email.',
+        message: 'O telefone fornecido já está em uso. Por favor, utilize outro telefone.',
       });
     } else if (error.code === '23505' && error.constraint === 'prestadores_cpf_cnpj_key') {
       return res.status(409).json({
-        message: 'O CPF fornecido já está em uso. Por favor, utilize outro CPF.',
+        message: 'O CPF/CNPJ fornecido já está em uso. Por favor, utilize outro CPF/CNPJ.',
       });
     }
 
