@@ -14,7 +14,7 @@ router.get('/agendamento/:agendamento_id', agendamentosController.getAgendById);
 router.post('/agendamentos', agendamentosController.postAgendamento);
 
 // Put
-router.put('/agendamentos/:agendamento_id', agendamentosController.postAgendamento);
+router.put('/agendamentos/:agendamento_id', agendamentosController.putAgendamento);
 
 
 module.exports = router;
