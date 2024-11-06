@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c42e72ea-4c10-4698-ae18-a3833e4d2bbc",
+		"_postman_id": "52319b6d-d8b9-49d2-acca-d965a8145b57",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "1459536"
+		"_exporter_id": "38317233"
 	},
 	"item": [
 		{
@@ -21,15 +21,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/login",
-					"protocol": "http",
+					"raw": "{{base_url}}/login",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"login"
 					]
 				}
@@ -51,15 +47,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/reset-password",
-					"protocol": "http",
+					"raw": "{{base_url}}/reset-password",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"reset-password"
 					]
 				}
@@ -67,7 +59,7 @@
 			"response": []
 		},
 		{
-			"name": "Registro de usuário",
+			"name": "Registro de usuário prestador",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -81,15 +73,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/register",
-					"protocol": "http",
+					"raw": "{{base_url}}/register",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"register"
 					]
 				}
@@ -114,15 +102,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/agendamentosFuturos/62",
-					"protocol": "http",
+					"raw": "{{base_url}}/agendamentosFuturos/62",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"agendamentosFuturos",
 						"62"
 					]
@@ -148,15 +132,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/agendamentos/62",
-					"protocol": "http",
+					"raw": "{{base_url}}/agendamentos/62",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"agendamentos",
 						"62"
 					]
@@ -182,15 +162,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/agendamento/29",
-					"protocol": "http",
+					"raw": "{{base_url}}/agendamento/29",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"agendamento",
 						"29"
 					]
@@ -216,15 +192,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/agendamentos/62/2024-10-28/2024-10-28",
-					"protocol": "http",
+					"raw": "{{base_url}}/agendamentos/62/2024-10-28/2024-10-28",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"agendamentos",
 						"62",
 						"2024-10-28",
@@ -249,15 +221,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/agendamentos",
-					"protocol": "http",
+					"raw": "{{base_url}}/agendamentos",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"agendamentos"
 					]
 				}
@@ -282,15 +250,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/disponibilidade/62/segunda",
-					"protocol": "http",
+					"raw": "{{base_url}}/disponibilidade/62/segunda",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"disponibilidade",
 						"62",
 						"segunda"
@@ -298,6 +262,62 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Atualizar agendamento no banco",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 62,\r\n  \"data_agendamento\": \"2024-10-28\",\r\n  \"hora_inicio\": \"08:00\",\r\n  \"hora_fim\": \"08:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/agendamentos/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agendamentos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000/gestao/api/management",
+			"type": "string"
 		}
 	]
 }
