@@ -102,13 +102,23 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentosFuturos/62",
+					"raw": "{{base_url}}/agendamentosFuturos/62?limit=5&offset=10",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentosFuturos",
 						"62"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "offset",
+							"value": "10"
+						}
 					]
 				}
 			},
@@ -132,13 +142,23 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/62",
+					"raw": "{{base_url}}/agendamentos/62?limit=5&offset=5",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
 						"62"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "offset",
+							"value": "5"
+						}
 					]
 				}
 			},
@@ -192,7 +212,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/62/2024-10-28/2024-10-28",
+					"raw": "{{base_url}}/agendamentos/62/2024-10-28/2024-10-28?limit=5&offset=10",
 					"host": [
 						"{{base_url}}"
 					],
@@ -201,6 +221,16 @@
 						"62",
 						"2024-10-28",
 						"2024-10-28"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "offset",
+							"value": "10"
+						}
 					]
 				}
 			},

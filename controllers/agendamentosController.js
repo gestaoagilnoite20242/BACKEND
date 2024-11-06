@@ -86,16 +86,25 @@ function formatAgendamentoAtualizado(row){
 // Função para buscar agendamentos pelo ID do prestador
 exports.getAgendByPrestId = async (req, res) => {
   const { prestador_id } = req.params;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const offset = parseInt(req.query.offset, 10) || 0;
 
   try {
+    const countQuery = `
+      SELECT COUNT(*) AS total
+      FROM ${process.env.DB_SCHEMA}.agendamentos AS a
+      WHERE a.prestador_id = $1
+    `;
+    const countResult = await db.query(countQuery, [prestador_id]);
+    const totalRegistros = parseInt(countResult.rows[0].total, 10);
+    const totalPaginas = Math.ceil(totalRegistros / limit);
 
     const queryWithParameter = `
       ${queryBaseAgend}
-      WHERE
-        a.prestador_id = $1;
-      `;
-
-    const values = [prestador_id];
+      WHERE a.prestador_id = $1
+      LIMIT $2 OFFSET $3;
+    `;
+    const values = [prestador_id, limit, offset];
     const { rows } = await db.query(queryWithParameter, values);
 
     const agendamentos = rows.map(formatAgendamento);
@@ -103,7 +112,10 @@ exports.getAgendByPrestId = async (req, res) => {
     res.status(200).json({
       message: 'Agendamentos obtidos com sucesso!',
       count: rows.length,
-      agendamentos: agendamentos,
+      totalRegistros,
+      totalPaginas,
+      currentPage: Math.floor(offset / limit) + 1,
+      agendamentos,
     });
   } catch (error) {
     console.error("Erro ao buscar agendamentos:", error);
@@ -143,19 +155,29 @@ exports.getAgendById = async (req, res) => {
 // Função para buscar agendamentos pelo ID do prestador e um intervalo de tempo
 exports.getAgendByPrestIdBetween = async (req, res) => {
   const { prestador_id, data_inicio, data_fim } = req.params;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const offset = parseInt(req.query.offset, 10) || 0;
 
   try {
+    const countQuery = `
+      SELECT COUNT(*) AS total
+      FROM ${process.env.DB_SCHEMA}.agendamentos AS a
+      WHERE a.prestador_id = $1
+        AND a.data_agendamento >= $2
+        AND a.data_agendamento <= $3
+    `;
+    const countResult = await db.query(countQuery, [prestador_id, data_inicio, data_fim]);
+    const totalRegistros = parseInt(countResult.rows[0].total, 10);
+    const totalPaginas = Math.ceil(totalRegistros / limit);
 
     const queryWithParameter = `
       ${queryBaseAgend}
-      WHERE
-        a.prestador_id = $1
-        and a.data_agendamento >= $2
-        and a.data_agendamento <= $3
-      ;
-      `;
-
-    const values = [prestador_id, data_inicio, data_fim];
+      WHERE a.prestador_id = $1
+        AND a.data_agendamento >= $2
+        AND a.data_agendamento <= $3
+      LIMIT $4 OFFSET $5;
+    `;
+    const values = [prestador_id, data_inicio, data_fim, limit, offset];
     const { rows } = await db.query(queryWithParameter, values);
 
     const agendamentos = rows.map(formatAgendamento);
@@ -163,7 +185,10 @@ exports.getAgendByPrestIdBetween = async (req, res) => {
     res.status(200).json({
       message: 'Agendamentos obtidos com sucesso!',
       count: rows.length,
-      agendamentos: agendamentos,
+      totalRegistros,
+      totalPaginas,
+      currentPage: Math.floor(offset / limit) + 1,
+      agendamentos,
     });
   } catch (error) {
     console.error("Erro ao buscar agendamentos:", error);
@@ -174,18 +199,27 @@ exports.getAgendByPrestIdBetween = async (req, res) => {
 // Função para buscar agendamentos futuros por um ID do prestador
 exports.getAgendFuturByPrestId = async (req, res) => {
   const { prestador_id } = req.params;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const offset = parseInt(req.query.offset, 10) || 0;
 
   try {
+    const countQuery = `
+      SELECT COUNT(*) AS total
+      FROM ${process.env.DB_SCHEMA}.agendamentos AS a
+      WHERE a.data_agendamento >= CURRENT_TIMESTAMP
+        AND a.prestador_id = $1
+    `;
+    const countResult = await db.query(countQuery, [prestador_id]);
+    const totalRegistros = parseInt(countResult.rows[0].total, 10);
+    const totalPaginas = Math.ceil(totalRegistros / limit);
 
     const queryWithParameter = `
       ${queryBaseAgend}
-      where
-	      a.data_agendamento >= CURRENT_TIMESTAMP
-        and  a.prestador_id = $1
-      ;
-      `;
-
-    const values = [prestador_id];
+      WHERE a.data_agendamento >= CURRENT_TIMESTAMP
+        AND a.prestador_id = $1
+      LIMIT $2 OFFSET $3;
+    `;
+    const values = [prestador_id, limit, offset];
     const { rows } = await db.query(queryWithParameter, values);
 
     const agendamentos = rows.map(formatAgendamento);
@@ -193,7 +227,10 @@ exports.getAgendFuturByPrestId = async (req, res) => {
     res.status(200).json({
       message: 'Agendamentos obtidos com sucesso!',
       count: rows.length,
-      agendamentos: agendamentos,
+      totalRegistros,
+      totalPaginas,
+      currentPage: Math.floor(offset / limit) + 1,
+      agendamentos,
     });
   } catch (error) {
     console.error("Erro ao buscar agendamentos:", error);
