@@ -14,10 +14,10 @@ const app = express();
 app.use(cors());  // Isso habilita o CORS para qualquer origem
 app.use(express.json());
 
-app.use("/api/management", authRoutes);
-app.use("/api/management", managementRoutes);
-app.use("/api/management", agendamentosRoutes);
-app.use("/api/management", disponibilidadeRoutes);
+app.use("/gestao/api/management", authRoutes);
+app.use("/gestao/api/management", managementRoutes);
+app.use("/gestao/api/management", agendamentosRoutes);
+app.use("/gestao/api/management", disponibilidadeRoutes);
 
 const PORT = process.env.PORT || 3000;
 
