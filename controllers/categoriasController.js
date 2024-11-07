@@ -3,7 +3,13 @@ const db = require('../config/db'); // Importa a conexão com o banco de dados
 function formatPrestadoresByCat(row) {
   return {
     prestador: {
-      id: row.id,
+      id: row.prestador_id,
+      nome: row.nome,
+      categoria: row.categoria,
+      email: row.email,
+      telefone: row.telefone,
+      cidade: row.cidade,
+      estado: row.estado,
       cpf_cnpj: row.cpf_cnpj,
       atividade: row.atividade,
       services: row.services,
@@ -25,9 +31,7 @@ exports.getCategorias = async (req, res) => {
             ${process.env.DB_SCHEMA}.categorias
           `;
 
-
         const { rows } = await db.query(queryGetCategorias);
-
         
         res.status(200).json({
             message: 'Categorias obtidas com sucesso!',
@@ -45,49 +49,54 @@ exports.getPrestadoresByCat = async (req, res) => {
   const { categoria_id } = req.params;
 
   try {
-
     const queryWithParameter = `
-      select
-        a.id
-        ,a.cpf_cnpj
-        ,a.atividade
-        ,a.services
-        ,a.logo
-        ,a.instagram
-        ,a.website
-        ,a.usuario_id
-        ,c.nome
-        ,c.email
-        ,c.telefone
-        ,b.dia_semana
-        ,b.hora_inicio
-        ,b.hora_fim
-      from
-        ${process.env.DB_SCHEMA}.prestadores as a
-      inner join
-        ${process.env.DB_SCHEMA}.ritmo_trabalho as b
-          on a.id = b.prestador_id
-      inner join
-        ${process.env.DB_SCHEMA}.usuarios as c
-          on a.usuario_id = c.id
-      where
-        a.id = $1
-        and b.dia_semana = $2
+      SELECT
+        cat.nome AS categoria
+        ,pr.id AS prestador_id
+        ,pr.cpf_cnpj
+        ,pr.atividade
+        ,pr.services
+        ,pr.logo
+        ,pr.instagram
+        ,pr.website
+        ,pr.usuario_id
+        ,us.nome
+        ,us.email
+        ,us.telefone
+        ,cid.nome AS cidade
+        ,est.nome AS estado 
+      FROM
+        ${process.env.DB_SCHEMA}.prestadores as pr
+      INNER JOIN
+        ${process.env.DB_SCHEMA}.categorias as cat
+          ON cat.id = pr.categoria_id
+      INNER JOIN
+        ${process.env.DB_SCHEMA}.usuarios as us
+          ON pr.usuario_id = us.id
+      INNER JOIN
+        ${process.env.DB_SCHEMA}.cidades as cid
+          ON us.cidade_id = cid.id
+      INNER JOIN
+        ${process.env.DB_SCHEMA}.estados as est
+          ON cid.estado_id = est.id
+
+      WHERE
+        cat.id = $1
       ;
       `;
 
-    const values = [prestador_id, dia_da_semana];
+    const values = [categoria_id];
     const { rows } = await db.query(queryWithParameter, values);
 
-    const disponibilidade = rows.map(formatDisponibilidade);
+    const prestadores = rows.map(formatPrestadoresByCat);
 
     res.status(200).json({
-      message: 'Disponibilidade do dia obtida com sucesso!',
+      message: 'Prestadores da categoria obtidos com sucesso!',
       count: rows.length,
-      disponibilidade: disponibilidade,
+      prestadores: prestadores
     });
   } catch (error) {
-    console.error("Erro ao buscar disponibilidade do dia:", error);
-    res.status(500).json({ message: 'Erro ao buscar disponibilidade do dia.', error: error.message });
+    console.error("Erro ao buscar prestadores da categoria.", error);
+    res.status(500).json({ message: 'Erro ao buscar prestadores da categoria.', error: error.message });
   }
 };
