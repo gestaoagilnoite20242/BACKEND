@@ -123,6 +123,44 @@ exports.getAgendByPrestId = async (req, res) => {
   }
 };
 
+exports.getAgendByPrestIdNextHours = async (req, res) => {
+  const { prestador_id } = req.params;
+
+  try {
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    const currentTimeString = currentDate.toTimeString().split(' ')[0]; // Formato HH:MM:SS
+    const twoHoursLater = new Date(currentDate.getTime() + 2 * 60 * 60 * 1000);
+    const twoHoursLaterString = twoHoursLater.toTimeString().split(' ')[0]; // Formato HH:MM:SS
+
+    const queryWithParameter = `
+      ${queryBaseAgend}
+      WHERE
+        a.prestador_id = $1
+        AND a.data_agendamento = $2
+        AND a.hora_inicio > $3
+        AND a.hora_inicio < $4
+      ;
+    `;
+
+    const values = [prestador_id, currentDateString, currentTimeString, twoHoursLaterString];
+
+    const { rows } = await db.query(queryWithParameter, values);
+
+    const agendamento = rows.map(formatAgendamento);
+
+    res.status(200).json({
+      message: 'Agendamento obtido com sucesso!',
+      count: rows.length,
+      agendamentos: agendamento,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar agendamento:", error);
+    res.status(500).json({ message: 'Erro ao buscar agendamento.', error: error.message });
+  }
+};
+
+
 // Função para buscar um agendamento pelo ID
 exports.getAgendById = async (req, res) => {
   const { agendamento_id } = req.params;
@@ -155,7 +193,7 @@ exports.getAgendById = async (req, res) => {
 // Função para buscar agendamentos pelo ID do prestador e um intervalo de tempo
 exports.getAgendByPrestIdBetween = async (req, res) => {
   const { prestador_id, data_inicio, data_fim } = req.params;
-  const limit = parseInt(req.query.limit, 10) || 10;
+  const limit = parseInt(req.query.limit, 10) || 999999999999;
   const offset = parseInt(req.query.offset, 10) || 0;
 
   try {

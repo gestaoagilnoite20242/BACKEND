@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e3575a39-1cbd-4067-a8ea-bc24f6acb785",
+		"_postman_id": "52319b6d-d8b9-49d2-acca-d965a8145b57",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "1459536"
+		"_exporter_id": "38317233"
 	},
 	"item": [
 		{
@@ -165,6 +165,36 @@
 			"response": []
 		},
 		{
+			"name": "Obter agendamentos por id de prestador das proximas duas horas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/agendamentosNextHours/62",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agendamentosNextHours",
+						"62"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Obter agendamentos por id de agendamento",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -212,24 +242,24 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/62/2024-10-28/2024-10-28?limit=5&offset=10",
+					"raw": "{{base_url}}/agendamentos/62/2024-11-11/2024-11-11?limit=99999&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
 						"62",
-						"2024-10-28",
-						"2024-10-28"
+						"2024-11-11",
+						"2024-11-11"
 					],
 					"query": [
 						{
 							"key": "limit",
-							"value": "5"
+							"value": "99999"
 						},
 						{
 							"key": "offset",
-							"value": "10"
+							"value": "0"
 						}
 					]
 				}
@@ -304,7 +334,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 62,\r\n  \"data_agendamento\": \"2024-10-28\",\r\n  \"hora_inicio\": \"08:00\",\r\n  \"hora_fim\": \"08:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 62,\r\n  \"data_agendamento\": \"2024-11-07\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -349,33 +379,6 @@
 						"disponibilidade",
 						"62",
 						"segunda"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Atualizar agendamento no banco",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 62,\r\n  \"data_agendamento\": \"2024-10-28\",\r\n  \"hora_inicio\": \"08:00\",\r\n  \"hora_fim\": \"08:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/agendamentos/3",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"agendamentos",
-						"3"
 					]
 				}
 			},
