@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "52319b6d-d8b9-49d2-acca-d965a8145b57",
+		"_postman_id": "e3575a39-1cbd-4067-a8ea-bc24f6acb785",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "38317233"
+		"_exporter_id": "1459536"
 	},
 	"item": [
 		{
@@ -231,6 +231,67 @@
 							"key": "offset",
 							"value": "10"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter categorias de serviços",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/categorias/getall",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"categorias",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter prestadores por categoria de serviços",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/categorias/prestadores/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"categorias",
+						"prestadores",
+						"1"
 					]
 				}
 			},

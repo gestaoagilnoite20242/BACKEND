@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const managementRoutes = require("./routes/managerRoutes");
 const agendamentosRoutes = require("./routes/agendamentosRoutes");
 const disponibilidadeRoutes = require("./routes/disponibilidadeRoutes");
+const categoriasRoutes = require("./routes/categoriasRoutes");
 const { testConnection } = require("./config/db"); // Importa a função de teste de conexão
 
 
@@ -18,6 +19,7 @@ app.use("/gestao/api/management", authRoutes);
 app.use("/gestao/api/management", managementRoutes);
 app.use("/gestao/api/management", agendamentosRoutes);
 app.use("/gestao/api/management", disponibilidadeRoutes);
+app.use("/gestao/api/management", categoriasRoutes);
 
 const PORT = process.env.PORT || 3000;
 
