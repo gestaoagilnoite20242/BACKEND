@@ -213,223 +213,381 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
       "message": "Senha atualizada com sucesso"
     }
     ```
+
 4.  **Obter agendamentos futuros de um prestador**:
 
-    - **Endpoint:** GET api/management/agendamentosFuturos/{idPrestador}
+    - **Endpoint:** GET /agendamentosFuturos/{idPrestador}
 
-    - **Descrição**:Esse endpoint é responsável por fornecer uma lista de agendamentos agendados de um prestador específico com base no idPrestador, Identificador do fornecedor para o que queremos buscar agendamentos futuros.
+    - **Descrição**: Esse endpoint é responsável por fornecer uma lista de agendamentos agendados de um prestador específico com base no idPrestador, Identificador do fornecedor para o que queremos buscar agendamentos futuros.
 
     - **Corpo da requisição:**:
 
-    não é necessário
-    
-    **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
-    ```json {
-    "message": "Agendamentos obtidos com sucesso!",
-    "count": 1,
-    "agendamentos": [
+    ```json
+    Não é necessário.
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+
+    ```json
+    {
+      "message": "Agendamentos obtidos com sucesso!",
+      "count": 1,
+      "agendamentos": [
         {
-            "agendamento": {
-                "id": 34,
-                "data_agendamento": "2024-11-11T03:00:00.000Z",
-                "hora_inicio": "08:00:00",
-                "hora_fim": "08:30:00",
-                "assunto": "Consulta de rotina",
-                "status": "pendente            ",
-                "criado_em": "2024-11-06T20:29:06.457Z",
-                "atualizado_em": "2024-11-06T20:29:06.457Z"
-            },
-            "cliente": {
-                "id": 300,
-                "nome": "Bianca Mendonça",
-                "email": "luancarvalho@example.org405384066214102024",
-                "telefone": "+55 (041) 6513 4477"
-            },
-            "prestador": {
-                "id": 62,
-                "nome": "Rosi Cardoso",
-                "email": "rosi.cardoso99@example.com",
-                "telefone": "11999999999c",
-                "cpf_cnpj": "1234429923423401",
-                "atividade": "Professora",
-                "services": "Aulas particulares",
-                "instagram": "https://instagram.com/RosiRosi",
-                "website": "https://Rosi.com.br"
-            }
+          "agendamento": {
+            "id": 34,
+            "data_agendamento": "2024-11-11T03:00:00.000Z",
+            "hora_inicio": "08:00:00",
+            "hora_fim": "08:30:00",
+            "assunto": "Consulta de rotina",
+            "status": "pendente            ",
+            "criado_em": "2024-11-06T20:29:06.457Z",
+            "atualizado_em": "2024-11-06T20:29:06.457Z"
+          },
+          "cliente": {
+            "id": 300,
+            "nome": "Bianca Mendonça",
+            "email": "luancarvalho@example.org405384066214102024",
+            "telefone": "+55 (041) 6513 4477"
+          },
+          "prestador": {
+            "id": 62,
+            "nome": "Rosi Cardoso",
+            "email": "rosi.cardoso99@example.com",
+            "telefone": "11999999999c",
+            "cpf_cnpj": "1234429923423401",
+            "atividade": "Professora",
+            "services": "Aulas particulares",
+            "instagram": "https://instagram.com/RosiRosi",
+            "website": "https://Rosi.com.br"
+          }
         }
-    ]
-}
-´´´
+      ]
+    }
+    ```
+
 5.  **Obter agendamentos por id de prestador**:
 
- - **Endpoint:** GET api/management/agendamentos/{idPrestador}
+    - **Endpoint:** GET /agendamentos/{idPrestador}
 
-    - **Descrição**:Este endpoint é utilizado para recuperar uma lista de agendamentos associados a um prestador.
+    - **Descrição**: Este endpoint é utilizado para recuperar uma lista de agendamentos associados a um prestador.
 
     - **Corpo da requisição:**:
 
-    não é necessário
-    
-    **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
-    ```json {
-    "message": "Agendamentos obtidos com sucesso!",
-    "count": 28,
-    "agendamentos": [
-        {
-            "agendamento": {
-                "id": 4,
-                "data_agendamento": "2024-10-28T03:00:00.000Z",
-                "hora_inicio": "08:00:00",
-                "hora_fim": "08:30:00",
-                "assunto": "teste",
-                "status": "confirmado          ",
-                "criado_em": "2024-10-29T14:38:14.652Z",
-                "atualizado_em": "2024-10-29T17:43:20.211Z"
-            },
-            "cliente": {
-                "id": 300,
-                "nome": "Bianca Mendonça",
-                "email": "luancarvalho@example.org405384066214102024",
-                "telefone": "+55 (041) 6513 4477"
-            },
-            "prestador": {
-                "id": 62,
-                "nome": "Rosi Cardoso",
-                "email": "rosi.cardoso99@example.com",
-                "telefone": "11999999999c",
-                "cpf_cnpj": "1234429923423401",
-                "atividade": "Professora",
-                "services": "Aulas particulares",
-                "instagram": "https://instagram.com/RosiRosi",
-                "website": "https://Rosi.com.br"
-            }
-        },
-        {
-            "agendamento": {
-                "id": 5,
-                "data_agendamento": "2024-11-04T03:00:00.000Z",
-                "hora_inicio": "08:00:00",
-                "hora_fim": "08:30:00",
-                "assunto": "teste",
-                "status": "pendente            ",
-                "criado_em": "2024-10-29T14:41:15.586Z",
-                "atualizado_em": "2024-10-29T14:41:15.586Z"
-            },
-            "cliente": {
-                "id": 300,
-                "nome": "Bianca Mendonça",
-                "email": "luancarvalho@example.org405384066214102024",
-                "telefone": "+55 (041) 6513 4477"
-            },
-            "prestador": {
-                "id": 62,
-                "nome": "Rosi Cardoso",
-                "email": "rosi.cardoso99@example.com",
-                "telefone": "11999999999c",
-                "cpf_cnpj": "1234429923423401",
-                "atividade": "Professora",
-                "services": "Aulas particulares",
-                "instagram": "https://instagram.com/RosiRosi",
-                "website": "https://Rosi.com.br"
-            }
-        },
-        {
-            "agendamento": {
-                "id": 6,
-                "data_agendamento": "2024-11-04T03:00:00.000Z",
-                "hora_inicio": "08:00:00",
-                "hora_fim": "08:30:00",
-                "assunto": "Consulta de rotina",
-                "status": "pendente            ",
-                "criado_em": "2024-10-29T21:28:26.523Z",
-                "atualizado_em": "2024-10-29T21:28:26.523Z"
-            },
-            "cliente": {
-                "id": 300,
-                "nome": "Bianca Mendonça",
-                "email": "luancarvalho@example.org405384066214102024",
-                "telefone": "+55 (041) 6513 4477"
-            },
-            "prestador": {
-                "id": 62,
-                "nome": "Rosi Cardoso",
-                "email": "rosi.cardoso99@example.com",
-                "telefone": "11999999999c",
-                "cpf_cnpj": "1234429923423401",
-                "atividade": "Professora",
-                "services": "Aulas particulares",
-                "instagram": "https://instagram.com/RosiRosi",
-                "website": "https://Rosi.com.br"
-            }
+    ```json
+    Não é necessário.
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+
+    ```json
+    {
+        "message": "Agendamentos obtidos com sucesso!",
+        "count": 28,
+        "agendamentos": [
+            {
+                "agendamento": {
+                    "id": 4,
+                    "data_agendamento": "2024-10-28T03:00:00.000Z",
+                    "hora_inicio": "08:00:00",
+                    "hora_fim": "08:30:00",
+                    "assunto": "teste",
+                    "status": "confirmado          ",
+                    "criado_em": "2024-10-29T14:38:14.652Z",
+                    "atualizado_em": "2024-10-29T17:43:20.211Z"
                 },
-}
+                "cliente": {
+                    "id": 300,
+                    "nome": "Bianca Mendonça",
+                    "email": "luancarvalho@example.org405384066214102024",
+                    "telefone": "+55 (041) 6513 4477"
+                },
+                "prestador": {
+                    "id": 62,
+                    "nome": "Rosi Cardoso",
+                    "email": "rosi.cardoso99@example.com",
+                    "telefone": "11999999999c",
+                    "cpf_cnpj": "1234429923423401",
+                    "atividade": "Professora",
+                    "services": "Aulas particulares",
+                    "instagram": "https://instagram.com/RosiRosi",
+                    "website": "https://Rosi.com.br"
+                }
+            },
+            {
+                "agendamento": {
+                    "id": 5,
+                    "data_agendamento": "2024-11-04T03:00:00.000Z",
+                    "hora_inicio": "08:00:00",
+                    "hora_fim": "08:30:00",
+                    "assunto": "teste",
+                    "status": "pendente            ",
+                    "criado_em": "2024-10-29T14:41:15.586Z",
+                    "atualizado_em": "2024-10-29T14:41:15.586Z"
+                },
+                "cliente": {
+                    "id": 300,
+                    "nome": "Bianca Mendonça",
+                    "email": "luancarvalho@example.org405384066214102024",
+                    "telefone": "+55 (041) 6513 4477"
+                },
+                "prestador": {
+                    "id": 62,
+                    "nome": "Rosi Cardoso",
+                    "email": "rosi.cardoso99@example.com",
+                    "telefone": "11999999999c",
+                    "cpf_cnpj": "1234429923423401",
+                    "atividade": "Professora",
+                    "services": "Aulas particulares",
+                    "instagram": "https://instagram.com/RosiRosi",
+                    "website": "https://Rosi.com.br"
+                }
+            },
+            {
+                "agendamento": {
+                    "id": 6,
+                    "data_agendamento": "2024-11-04T03:00:00.000Z",
+                    "hora_inicio": "08:00:00",
+                    "hora_fim": "08:30:00",
+                    "assunto": "Consulta de rotina",
+                    "status": "pendente            ",
+                    "criado_em": "2024-10-29T21:28:26.523Z",
+                    "atualizado_em": "2024-10-29T21:28:26.523Z"
+                },
+                 "cliente": {
+                    "id": 300,
+                    "nome": "Bianca Mendonça",
+                    "email": "luancarvalho@example.org405384066214102024",
+                    "telefone": "+55 (041) 6513 4477"
+                },
+                "prestador": {
+                    "id": 62,
+                    "nome": "Rosi Cardoso",
+                    "email": "rosi.cardoso99@example.com",
+                    "telefone": "11999999999c",
+                    "cpf_cnpj": "1234429923423401",
+                    "atividade": "Professora",
+                    "services": "Aulas particulares",
+                    "instagram": "https://instagram.com/RosiRosi",
+                    "website": "https://Rosi.com.br"
+              }
+
+            },
+    }
+    ```
+
 6.  **Obter agendamentos por id de agendamento**:
 
- - **Endpoint:** GET api/management/agendamento/{idAgendamento}
+    - **Endpoint:** GET /agendamento/{idAgendamento}
 
-    - **Descrição**Este endpoint permite obter uma visão detalhada e específica de um compromisso, possibilitando a consulta a informações completas sobre o agendamento e os participantes envolvidos (cliente e prestador).
+    - **Descrição**: Este endpoint permite obter uma visão detalhada e específica de um compromisso, possibilitando a consulta a informações completas sobre o agendamento e os participantes envolvidos (cliente e prestador).
 
-  - **Corpo da requisição:**:
+    - **Corpo da requisição:**:
 
-    não é necessário
-    
-  **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
-    ```json{
-    "message": "Agendamento obtido com sucesso!",
-    "count": 1,
-    "agendamentos": [
+    ```json
+    Não é necessário.
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+
+    ```json
+    {
+      "message": "Agendamento obtido com sucesso!",
+      "count": 1,
+      "agendamentos": [
         {
-            "agendamento": {
-                "id": 29,
-                "data_agendamento": "2024-10-28T03:00:00.000Z",
-                "hora_inicio": "08:00:00",
-                "hora_fim": "08:30:00",
-                "assunto": "Consulta de rotina",
-                "status": "pendente            ",
-                "criado_em": "2024-10-31T05:24:51.802Z",
-                "atualizado_em": "2024-11-01T06:08:57.427Z"
-            },
-            "cliente": {
-                "id": 300,
-                "nome": "Bianca Mendonça",
-                "email": "luancarvalho@example.org405384066214102024",
-                "telefone": "+55 (041) 6513 4477"
-            },
-            "prestador": {
-                "id": 62,
-                "nome": "Rosi Cardoso",
-                "email": "rosi.cardoso99@example.com",
-                "telefone": "11999999999c",
-                "cpf_cnpj": "1234429923423401",
-                "atividade": "Professora",
-                "services": "Aulas particulares",
-                "instagram": "https://instagram.com/RosiRosi",
-                "website": "https://Rosi.com.br"
-            }
+          "agendamento": {
+            "id": 29,
+            "data_agendamento": "2024-10-28T03:00:00.000Z",
+            "hora_inicio": "08:00:00",
+            "hora_fim": "08:30:00",
+            "assunto": "Consulta de rotina",
+            "status": "pendente            ",
+            "criado_em": "2024-10-31T05:24:51.802Z",
+            "atualizado_em": "2024-11-01T06:08:57.427Z"
+          },
+          "cliente": {
+            "id": 300,
+            "nome": "Bianca Mendonça",
+            "email": "luancarvalho@example.org405384066214102024",
+            "telefone": "+55 (041) 6513 4477"
+          },
+          "prestador": {
+            "id": 62,
+            "nome": "Rosi Cardoso",
+            "email": "rosi.cardoso99@example.com",
+            "telefone": "11999999999c",
+            "cpf_cnpj": "1234429923423401",
+            "atividade": "Professora",
+            "services": "Aulas particulares",
+            "instagram": "https://instagram.com/RosiRosi",
+            "website": "https://Rosi.com.br"
+          }
         }
-    ]
-}
-7-**Obter agendamentos por id de prestador em um intervalo de tempo**:
+      ]
+    }
+    ```
 
-- **Endpoint:** GET api/management/agendamentos/{idPrestador}/{dataInicio}/{dataFim}
+7.  **Obter agendamentos por id de prestador em um intervalo de tempo**:
 
-    - **Descrição**Esse endpoint permite filtrar agendamentos por prestador e intervalo de tempo, retornando uma lista detalhada ou vazia caso nenhum agendamento seja encontrado.
+    - **Endpoint:** GET /agendamentos/{idPrestador}/{dataInicio}/{dataFim}
 
-  - **Corpo da requisição:**:
+    - **Descrição**: Esse endpoint permite filtrar agendamentos por prestador e intervalo de tempo, retornando uma lista detalhada ou vazia caso nenhum agendamento seja encontrado.
 
-    não é necessário
-    
-  **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
-    ```json{
-    "message": "Agendamentos obtidos com sucesso!",
-    "count": 0,
-    "agendamentos": []
-}
+    - **Corpo da requisição:**:
+
+    ```json
+    Não é necessário.
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+
+    ```json
+    {
+      "message": "Agendamentos obtidos com sucesso!",
+      "count": 0,
+      "agendamentos": []
+    }
+    ```
+
+8.  **Inserir agendamento no banco**:
+
+    - **Endpoint:** POST /agendamentos
+
+    - **Descrição**: Esse endpoint permite inserir no banco de dados um agendamento de horário.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    {
+      "cliente_id": 300,
+      "prestador_id": 62,
+      "data_agendamento": "2024-11-07",
+      "hora_inicio": "12:00",
+      "hora_fim": "12:30",
+      "assunto": "Consulta de rotina",
+      "status": "pendente"
+    }
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 201 (CREATED)**
+
+      ```json
+      {
+        "message": "Agendamento inserido com sucesso!",
+        "agendamento": {
+          "agendamento": {
+            "data_agendamento": "2024-11-07T00:00:00.000Z",
+            "hora_inicio": "12:00:00",
+            "hora_fim": "12:30:00",
+            "assunto": "Consulta de rotina",
+            "status": "pendente            ",
+            "criado_em": "2024-11-10T14:09:16.945Z",
+            "atualizado_em": "2024-11-10T14:09:16.945Z"
+          },
+          "cliente": {
+            "id": 300
+          },
+          "prestador": {
+            "id": 62
+          }
+        }
+      }
+      ```
+
+9.  **Obter disponibilidade de um prestador para um dia da semana**:
+
+    - **Endpoint:** GET /disponibilidade/{idPrestador}/{diaSemana}
+
+    - **Descrição**: Esse endpoint permite consultar os horários disponíveis para um prestador em um determinado dia da semana.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    Não é necessário
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+      ```json
+      {
+        "message": "Disponibilidade do dia obtida com sucesso!",
+        "count": 1,
+        "disponibilidade": [
+          {
+            "prestador": {
+              "id": 62,
+              "cpf_cnpj": "1234429923423401",
+              "atividade": "Professora",
+              "services": "Aulas particulares",
+              "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string",
+              "instagram": "https://instagram.com/RosiRosi",
+              "website": "https://Rosi.com.br",
+              "usuario_id": 335
+            },
+            "usuario": {
+              "nome": "Rosi Cardoso",
+              "email": "rosi.cardoso99@example.com",
+              "telefone": "11999999999c"
+            },
+            "disponibilidade": {
+              "dia_semana": "segunda             ",
+              "hora_inicio": "08:00:00",
+              "hora_fim": "18:00:00"
+            }
+          }
+        ]
+      }
+      ```
+
+10. **Obter disponibilidade de um prestador para um dia da semana**:
+
+    - **Endpoint:** PUT /agendamentos/{idAgendamento}
+
+    - **Descrição**: Esse endpoint permite atualizar os dados de um agendamento.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    {
+      "cliente_id": 300,
+      "prestador_id": 62,
+      "data_agendamento": "2024-10-28",
+      "hora_inicio": "08:00",
+      "hora_fim": "08:30",
+      "assunto": "Consulta de rotina",
+      "status": "pendente"
+    }
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 201 (CREATED)**
+      ```json
+      {
+        "message": "Agendamento inserido com sucesso!",
+        "agendamento": {
+          "agendamento": {
+            "data_agendamento": "2024-10-28T00:00:00.000Z",
+            "hora_inicio": "08:00:00",
+            "hora_fim": "08:30:00",
+            "assunto": "Consulta de rotina",
+            "status": "pendente            ",
+            "criado_em": "2024-11-10T14:35:56.516Z",
+            "atualizado_em": "2024-11-10T14:35:56.516Z"
+          },
+          "cliente": {
+            "id": 300
+          },
+          "prestador": {
+            "id": 62
+          }
+        }
+      }
+      ```
+
 ---
 
 **Contato**
 
 Para quaisquer dúvidas ou sugestões, sinta-se à vontade para entrar em contato através de:
 
-- E-mail: email do Pedro Sbardelotto (INSERIR)
-- E-mail: email do Jonatas Davi (INSERIR)
+- E-mail: sbardelottopedro97@gmail.com
+- E-mail: jonatasdavi.ads@gmail.com
