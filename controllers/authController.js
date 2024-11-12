@@ -22,7 +22,19 @@ exports.login = async (req, res) => {
 
   try {
     // Verificar se o usuário existe no banco de dados
-    const query = `SELECT * FROM ${process.env.DB_SCHEMA}.usuarios WHERE email = $1`;  // Inclua o schema do .env
+    const query = `
+      select 
+        a.*
+        ,b.id as prestador_id
+      from 
+        agenda.usuarios as a
+      inner join
+        agenda.prestadores b
+          on a.id = b.usuario_id 
+      where 
+        email = $1
+      ;`
+      ;
     const { rows } = await db.query(query, [email]);
     const user = rows[0];
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");  // Importa o pacote cors
+const { protect } = require("./middlewares/authMiddleware"); // Importa o middleware de autenticação
 dotenv.config();
 
 const authRoutes = require("./routes/authRoutes");
@@ -17,9 +18,9 @@ app.use(express.json());
 
 app.use("/gestao/api/management", authRoutes);
 app.use("/gestao/api/management", managementRoutes);
-app.use("/gestao/api/management", agendamentosRoutes);
-app.use("/gestao/api/management", disponibilidadeRoutes);
-app.use("/gestao/api/management", categoriasRoutes);
+app.use("/gestao/api/management", protect, agendamentosRoutes);
+app.use("/gestao/api/management", protect, disponibilidadeRoutes);
+app.use("/gestao/api/management", protect, categoriasRoutes);
 
 const PORT = process.env.PORT || 3500;
 

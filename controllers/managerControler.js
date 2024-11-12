@@ -24,7 +24,7 @@ exports.registerManager = async (req, res) => {
     } = req.body;
 
     // Validação básica dos campos obrigatórios
-    if (!nome || !senha || !telefone || !cpf_cnpj || !servico || !logo_base64 || !cidade || !estado || !ritmo_trabalho || !categoria_id || !subcategoria_id ) {
+    if (!email || !nome ||!nome || !senha || !telefone || !cpf_cnpj || !servico || !logo_base64 || !cidade || !estado || !ritmo_trabalho || !categoria_id || !subcategoria_id ) {
       return res.status(400).json({ message: 'Por favor, preencha todos os campos obrigatórios.' });
     }
 
@@ -32,6 +32,18 @@ exports.registerManager = async (req, res) => {
     // if (email && !isEmailValid(email)) {
     //   return res.status(400).json({ message: 'Email inválido.' });
     // }
+
+      // Verifica se já existe um usuário com o mesmo e-mail
+      const queryCheckEmail = `
+        SELECT id
+        FROM ${process.env.DB_SCHEMA}.usuarios
+        WHERE email = $1;
+      `;
+      const { rows: emailRows } = await db.query(queryCheckEmail, [email]);
+  
+      if (emailRows.length > 0) {
+        return res.status(409).json({ message: 'O e-mail fornecido já está em uso. Por favor, utilize outro e-mail.' });
+      }
 
     // Criptografar a senha
     const hashedPassword = bcrypt.hashSync(senha, 8);
@@ -77,7 +89,7 @@ exports.registerManager = async (req, res) => {
 
     const valuesUsuario = [
       nome,
-      email || null, // Permite que o email seja NULL
+      email, // Permite que o email seja NULL
       hashedPassword,
       telefone, // Telefone obrigatório e único
       'prestador', // Tipo de usuário é 'prestador'
@@ -92,8 +104,8 @@ exports.registerManager = async (req, res) => {
 
     // Query SQL para inserir na tabela `prestadores` com o ID do usuário
     const queryPrestador = `
-      INSERT INTO ${process.env.DB_SCHEMA}.prestadores (usuario_id, cpf_cnpj, atividade, services, logo, instagram, website, criado_em, atualizado_em, listado, ativo, tipo_agenda, subcategoria_id, categoria_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      INSERT INTO ${process.env.DB_SCHEMA}.prestadores (id, usuario_id, cpf_cnpj, atividade, services, logo, instagram, website, criado_em, atualizado_em, listado, ativo, tipo_agenda, subcategoria_id, categoria_id)
+      VALUES (nextval('agenda.prestadores_id_seq'::regclass), $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       RETURNING *;
     `;
 
@@ -116,29 +128,85 @@ exports.registerManager = async (req, res) => {
 
     // Executa a query de inserção na tabela `prestadores`
     const { rows: prestadorRows } = await db.query(queryPrestador, valuesPrestador);
+    const prestadorId = prestadorRows[0].id;
 
     // Inserir os dados de ritmo de trabalho na tabela `ritmo_trabalho`
     const queryRitmo = `
       INSERT INTO ${process.env.DB_SCHEMA}.ritmo_trabalho (prestador_id, dia_semana, hora_inicio, hora_fim, criado_em)
       VALUES ($1, $2, $3, $4, $5)
+      returning dia_semana, hora_inicio, hora_fim
     `;
+
+    const results = [];
 
     for (const ritmo of ritmo_trabalho) {
       const { dia_semana, hora_inicio, hora_fim } = ritmo;
       const valuesRitmo = [prestadorRows[0].id, dia_semana, hora_inicio, hora_fim, new Date()];
-      await db.query(queryRitmo, valuesRitmo);
+      const res = await db.query(queryRitmo, valuesRitmo);
+      results.push(res.rows[0]);
     }
+
+    console.log(results);
 
     // Query para buscar os dados completos do usuário e do prestador
     const queryFinal = `
-      SELECT u.*, p.*, r.*
-      FROM ${process.env.DB_SCHEMA}.usuarios u
-      JOIN ${process.env.DB_SCHEMA}.prestadores p ON u.id = p.usuario_id
-      LEFT JOIN ${process.env.DB_SCHEMA}.ritmo_trabalho r ON p.id = r.prestador_id
-      WHERE u.id = $1
+      select 
+        u.id as usuario_id
+        ,u.nome as prestador_nome
+        ,u.email as prestador_email
+        ,u.telefone as prestador_telefone
+        ,u.tipo_usuario
+        ,u.cidade_id
+        ,p.id as prestador_id
+        ,p.cpf_cnpj as prestador_cpf_cnpj
+        ,p.atividade as prestador_atividade
+        ,p.tipo_agenda
+        ,p.categoria_id
+        ,p.subcategoria_id
+        ,p.services
+        ,p.logo
+        ,p.instagram
+        ,p.website
+      from 
+          agenda.usuarios u
+      inner join 
+          agenda.prestadores p 
+          on u.id = p.usuario_id
+      where 
+          p.id = $1
+      ;
     `;
 
-    const { rows: finalRows } = await db.query(queryFinal, [usuarioId]);
+    const { rows: finalRows } = await db.query(queryFinal, [prestadorId]);
+    const resRows = finalRows.map(row => {
+      return {
+        usuario: {
+          id: row.usuario_id,
+          nome: row.prestador_nome,
+          email: row.prestador_email,
+          telefone: row.prestador_telefone,
+          tipo_usuario: row.tipo_usuario
+        },
+        prestador: {
+          id: row.prestador_id,
+          cpf_cnpj: row.prestador_cpf_cnpj,
+          atividade: row.prestador_atividade,
+          tipo_agenda: row.tipo_agenda,
+          services: row.services,
+          logo: row.logo,
+          instagram: row.instagram,
+          website: row.website
+        },
+        cidade: {
+          id: row.cidade_id
+        },
+        categoria: {
+          id: row.categoria_id,
+          subcategoria_id: row.subcategoria_id
+        },
+        ritmoTrabalho: results // Adiciona ritmoTrabalho aqui
+      };
+    });
 
     // Confirma a transação
     await db.query('COMMIT');
@@ -146,7 +214,7 @@ exports.registerManager = async (req, res) => {
     // Retorna a resposta de sucesso com os dados completos do prestador e usuário
     res.status(201).json({
       message: 'Prestador cadastrado com sucesso!',
-      prestador: finalRows[0], // Retorna o prestador, usuário e ritmo de trabalho concatenados para o front tratar
+      resRows, // Retorna o prestador, usuário e ritmo de trabalho concatenados para o front tratar
     });
   } catch (error) {
     // Em caso de erro, faz o rollback da transação

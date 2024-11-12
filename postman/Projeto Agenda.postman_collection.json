@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"rosi.cardoso4@example.com\",\r\n  \"password\": \"senhaSegura123\"\r\n}\r\n",
+					"raw": "{\r\n  \"email\": \"joao.rosa@example.com\",\r\n  \"password\": \"senhaSegura123\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -65,7 +65,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"nome\": \"Rosi Cardoso\",\r\n  \"email\": \"rosi.cardoso4@example.com\",\r\n  \"senha\": \"senhaSegura123\",\r\n  \"telefone\": \"11999999999\",\r\n  \"cpf_cnpj\": \"1234423923423402\",\r\n  \"atividade\": \"Professora\",\r\n  \"servico\": \"Aulas particulares\",\r\n  \"logo_base64\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string\",\r\n  \"social_media\": \"https://instagram.com/RosiRosi\",\r\n  \"website\": \"https://Rosi.com.br\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": {\r\n    \"nome\": \"São Paulo\",\r\n    \"sigla\": \"SP\"\r\n  },\r\n  \"ritmo_trabalho\": [\r\n    {\r\n      \"dia_semana\": \"segunda\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"terça\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    }\r\n  ],\r\n  \"categoria_id\": 1,\r\n  \"subcategoria_id\": 2,\r\n  \"tipo_agenda\": null\r\n}",
+					"raw": "{\r\n  \"nome\": \"João Rosa\",\r\n  \"email\": \"joao.rosa@example.com\",\r\n  \"senha\": \"senhaSegura123\",\r\n  \"telefone\": \"51999999991\",\r\n  \"cpf_cnpj\": \"60000000001\",\r\n  \"atividade\": \"Professora\",\r\n  \"servico\": \"Aulas particulares\",\r\n  \"logo_base64\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string\",\r\n  \"social_media\": \"https://instagram.com/RosiRosi\",\r\n  \"website\": \"https://Rosi.com.br\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": {\r\n    \"nome\": \"São Paulo\",\r\n    \"sigla\": \"SP\"\r\n  },\r\n  \"ritmo_trabalho\": [\r\n    {\r\n      \"dia_semana\": \"segunda\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"terça\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"quarta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },    \r\n    {\r\n      \"dia_semana\": \"quinta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },    \r\n    {\r\n      \"dia_semana\": \"sexta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    }\r\n  ],\r\n  \"categoria_id\": 1,\r\n  \"subcategoria_id\": 2,\r\n  \"tipo_agenda\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -102,13 +102,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentosFuturos/53?limit=5&offset=0",
+					"raw": "{{base_url}}/agendamentosFuturos/73?limit=5&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentosFuturos",
-						"53"
+						"73"
 					],
 					"query": [
 						{
@@ -142,13 +142,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/53?limit=500&offset=0",
+					"raw": "{{base_url}}/agendamentos/73?limit=500&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"53"
+						"73"
 					],
 					"query": [
 						{
@@ -182,13 +182,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentosNextHours/53",
+					"raw": "{{base_url}}/agendamentosNextHours/73",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentosNextHours",
-						"53"
+						"73"
 					]
 				}
 			},
@@ -242,15 +242,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/53/2024-11-07/2024-11-07?limit=99999&offset=0",
+					"raw": "{{base_url}}/agendamentos/74/2024-11-08/2024-11-08?limit=99999&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"53",
-						"2024-11-07",
-						"2024-11-07"
+						"74",
+						"2024-11-08",
+						"2024-11-08"
 					],
 					"query": [
 						{
@@ -334,7 +334,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 53,\r\n  \"data_agendamento\": \"2024-11-08\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 74,\r\n  \"data_agendamento\": \"2024-11-08\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -426,19 +426,29 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/112",
+					"raw": "{{base_url}}/agendamentos/114",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"112"
+						"114"
 					]
 				}
 			},
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8uY2FyZG9zbzRAZXhhbXBsZS5jb20iLCJ0aXBvVXN1YXJpbyI6InByZXN0YWRvciAgICAgICAgICAgIiwiaWF0IjoxNzMxNDI1NDk3LCJleHAiOjE3MzE1MTE4OTd9.vcM-CkldVuo2kV9ytGG_ouR8DINzJt9n2KtrtzyaJ3Q",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
