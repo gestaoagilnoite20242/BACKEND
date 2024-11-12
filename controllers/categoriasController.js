@@ -29,6 +29,8 @@ exports.getCategorias = async (req, res) => {
           SELECT *
           FROM
             ${process.env.DB_SCHEMA}.categorias
+          ORDER BY
+            NOME
           `;
 
         const { rows } = await db.query(queryGetCategorias);
