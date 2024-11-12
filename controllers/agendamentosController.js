@@ -38,7 +38,7 @@ const queryBaseAgend = `
 function formatAgendamento(row) {
   return {
     agendamento: {
-      id: row.agendamento_id,
+      id: row.agendamento_id || row.id,
       data_agendamento: row.data_agendamento,
       hora_inicio: row.hora_inicio,
       hora_fim: row.hora_fim,
@@ -93,7 +93,9 @@ exports.getAgendByPrestId = async (req, res) => {
     const countQuery = `
       SELECT COUNT(*) AS total
       FROM ${process.env.DB_SCHEMA}.agendamentos AS a
-      WHERE a.prestador_id = $1
+      WHERE 
+        a.prestador_id = $1
+        AND a.status != 'cancelado'
     `;
     const countResult = await db.query(countQuery, [prestador_id]);
     const totalRegistros = parseInt(countResult.rows[0].total, 10);
@@ -101,7 +103,9 @@ exports.getAgendByPrestId = async (req, res) => {
 
     const queryWithParameter = `
       ${queryBaseAgend}
-      WHERE a.prestador_id = $1
+      WHERE 
+        a.prestador_id = $1
+        AND a.status != 'cancelado'
       LIMIT $2 OFFSET $3;
     `;
     const values = [prestador_id, limit, offset];
@@ -140,6 +144,7 @@ exports.getAgendByPrestIdNextHours = async (req, res) => {
         AND a.data_agendamento = $2
         AND a.hora_inicio > $3
         AND a.hora_inicio < $4
+        AND a.status != 'cancelado'
       ;
     `;
 
@@ -203,6 +208,7 @@ exports.getAgendByPrestIdBetween = async (req, res) => {
       WHERE a.prestador_id = $1
         AND a.data_agendamento >= $2
         AND a.data_agendamento <= $3
+        AND a.status != 'cancelado'
     `;
     const countResult = await db.query(countQuery, [prestador_id, data_inicio, data_fim]);
     const totalRegistros = parseInt(countResult.rows[0].total, 10);
@@ -213,6 +219,7 @@ exports.getAgendByPrestIdBetween = async (req, res) => {
       WHERE a.prestador_id = $1
         AND a.data_agendamento >= $2
         AND a.data_agendamento <= $3
+        AND a.status != 'cancelado'
       LIMIT $4 OFFSET $5;
     `;
     const values = [prestador_id, data_inicio, data_fim, limit, offset];
@@ -246,6 +253,7 @@ exports.getAgendFuturByPrestId = async (req, res) => {
       FROM ${process.env.DB_SCHEMA}.agendamentos AS a
       WHERE a.data_agendamento >= CURRENT_TIMESTAMP
         AND a.prestador_id = $1
+        AND a.status != 'cancelado'
     `;
     const countResult = await db.query(countQuery, [prestador_id]);
     const totalRegistros = parseInt(countResult.rows[0].total, 10);
@@ -255,6 +263,7 @@ exports.getAgendFuturByPrestId = async (req, res) => {
       ${queryBaseAgend}
       WHERE a.data_agendamento >= CURRENT_TIMESTAMP
         AND a.prestador_id = $1
+        AND a.status != 'cancelado'
       LIMIT $2 OFFSET $3;
     `;
     const values = [prestador_id, limit, offset];
@@ -345,9 +354,9 @@ exports.postAgendamento = async (req, res) => {
     // Query de inserção do agendamento
     const queryInsert = `
       INSERT INTO ${process.env.DB_SCHEMA}.agendamentos 
-        (cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status, criado_em, atualizado_em)
+        (id, cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status, criado_em, atualizado_em)
       VALUES 
-        ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        (nextval('agenda.agendamentos_id_seq'::regclass), $1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
       RETURNING *;
     `;
 

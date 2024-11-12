@@ -21,7 +21,7 @@ app.use("/gestao/api/management", agendamentosRoutes);
 app.use("/gestao/api/management", disponibilidadeRoutes);
 app.use("/gestao/api/management", categoriasRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3500;
 
 // Testa a conexão com o banco antes de iniciar o servidor
 testConnection().then(() => {

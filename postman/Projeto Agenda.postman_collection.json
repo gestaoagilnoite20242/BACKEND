@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "52319b6d-d8b9-49d2-acca-d965a8145b57",
+		"_postman_id": "015aa0cf-5438-4971-85d6-6fc65397e1bc",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38317233"
@@ -102,13 +102,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentosFuturos/62?limit=5&offset=10",
+					"raw": "{{base_url}}/agendamentosFuturos/53?limit=5&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentosFuturos",
-						"62"
+						"53"
 					],
 					"query": [
 						{
@@ -117,7 +117,7 @@
 						},
 						{
 							"key": "offset",
-							"value": "10"
+							"value": "0"
 						}
 					]
 				}
@@ -142,22 +142,22 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/62?limit=5&offset=5",
+					"raw": "{{base_url}}/agendamentos/53?limit=500&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"62"
+						"53"
 					],
 					"query": [
 						{
 							"key": "limit",
-							"value": "5"
+							"value": "500"
 						},
 						{
 							"key": "offset",
-							"value": "5"
+							"value": "0"
 						}
 					]
 				}
@@ -182,13 +182,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentosNextHours/62",
+					"raw": "{{base_url}}/agendamentosNextHours/53",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentosNextHours",
-						"62"
+						"53"
 					]
 				}
 			},
@@ -212,13 +212,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamento/29",
+					"raw": "{{base_url}}/agendamento/105",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamento",
-						"29"
+						"105"
 					]
 				}
 			},
@@ -242,15 +242,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/62/2024-11-11/2024-11-11?limit=99999&offset=0",
+					"raw": "{{base_url}}/agendamentos/53/2024-11-07/2024-11-07?limit=99999&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"62",
-						"2024-11-11",
-						"2024-11-11"
+						"53",
+						"2024-11-07",
+						"2024-11-07"
 					],
 					"query": [
 						{
@@ -334,7 +334,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 62,\r\n  \"data_agendamento\": \"2024-11-07\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 53,\r\n  \"data_agendamento\": \"2024-11-07\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -442,6 +442,12 @@
 		{
 			"key": "base_url",
 			"value": "https://core.wecom.com.br/gestao/api/management",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:3500/gestao/api/management",
 			"type": "string"
 		}
 	]
