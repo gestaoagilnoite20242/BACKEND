@@ -212,13 +212,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamento/105",
+					"raw": "{{base_url}}/agendamento/109",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamento",
-						"105"
+						"109"
 					]
 				}
 			},
@@ -334,7 +334,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 53,\r\n  \"data_agendamento\": \"2024-11-07\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 53,\r\n  \"data_agendamento\": \"2024-11-08\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -399,17 +399,40 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/management/agendamentos/29315",
-					"protocol": "http",
+					"raw": "{{base_url}}/agendamentos/29315",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
-						"management",
 						"agendamentos",
 						"29315"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Soft delete de agendamentos",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/agendamentos/112",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agendamentos",
+						"112"
 					]
 				}
 			},

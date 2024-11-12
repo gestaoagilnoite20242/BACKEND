@@ -17,5 +17,8 @@ router.post('/agendamentos', agendamentosController.postAgendamento);
 // Put
 router.put('/agendamentos/:agendamento_id', agendamentosController.putAgendamento);
 
+// Delete
+router.delete('/agendamentos/:agendamento_id', agendamentosController.deleteAgendamento);
+
 
 module.exports = router;

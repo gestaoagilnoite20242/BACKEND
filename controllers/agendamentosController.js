@@ -379,6 +379,30 @@ exports.postAgendamento = async (req, res) => {
       return res.status(400).json({ message: 'O horário do agendamento está fora do horário de atendimento do prestador.' });
     }
 
+    // Verifica se já existe um agendamento com a mesma data, hora de início e hora de fim
+    const queryCheckDuplicate = `
+      select 
+        id
+      from 
+        ${process.env.DB_SCHEMA}.agendamentos as a
+      where 
+        a.prestador_id = $1
+        AND a.data_agendamento = $2
+        AND a.hora_inicio = $3
+        AND a.hora_fim = $4
+        AND a.status != 'cancelado'
+      ;
+    `;
+    const duplicateValues = [prestador_id, data_agendamento, hora_inicio, hora_fim];
+    const { rows: duplicateRows } = await db.query(queryCheckDuplicate, duplicateValues);
+
+    if (duplicateRows.length > 0) {
+      const agendamentoIdDuplicate = duplicateRows[0].id;
+      return res.status(400).json({ 
+        message: 'Já existe um agendamento para este prestador com a mesma data e horário.', 
+        agendamento_id: agendamentoIdDuplicate 
+      });
+    }
     // Query de inserção do agendamento
     const queryInsert = `
       INSERT INTO ${process.env.DB_SCHEMA}.agendamentos 
@@ -462,3 +486,56 @@ exports.putAgendamento = async (req, res) => {
     return res.status(500).json({ message: 'Erro ao buscar agendamento.' });
   }
 }
+
+// Função para realizar soft delete de um agendamento
+exports.deleteAgendamento = async (req, res) => {
+  const { agendamento_id } = req.params;
+
+  if (!agendamento_id) {
+    return res.status(400).json({ message: 'O campo agendamento_id é obrigatório.' });
+  }
+
+  try {
+    // Verifica se o agendamento existe
+    const queryCheckAgendamento = `
+      select 
+        id
+      from 
+        ${process.env.DB_SCHEMA}.agendamentos as a
+      where 
+        id = $1
+      ;
+    `;
+    const { rows: agendamentoRows } = await db.query(queryCheckAgendamento, [agendamento_id]);
+
+    if (agendamentoRows.length === 0) {
+      return res.status(404).json({ message: 'Agendamento não encontrado.' });
+    }
+
+    // Query para realizar o soft delete (atualizar o status para 'cancelado')
+    const querySoftDelete = `
+      update 
+        ${process.env.DB_SCHEMA}.agendamentos
+      SET 
+        status = 'cancelado'
+        ,atualizado_em = CURRENT_TIMESTAMP
+      WHERE 
+        id = $1
+      RETURNING 
+        *
+      ;
+    `;
+    const { rows } = await db.query(querySoftDelete, [agendamento_id]);
+
+    // Formata o agendamento antes de retornar
+    const agendamentoCancelado = formatAgendamento(rows[0]);
+
+    res.status(200).json({
+      message: 'Agendamento cancelado com sucesso!',
+      agendamento: agendamentoCancelado,
+    });
+  } catch (error) {
+    console.error("Erro ao cancelar agendamento:", error);
+    res.status(500).json({ message: 'Erro ao cancelar agendamento.', error: error.message });
+  }
+};
