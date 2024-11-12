@@ -288,13 +288,41 @@ exports.getAgendFuturByPrestId = async (req, res) => {
 
 // Função para inserir um novo agendamento
 exports.postAgendamento = async (req, res) => {
-  const { cliente_id, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status } = req.body;
+  const { cliente_telefone, cliente_nome, prestador_id, data_agendamento, hora_inicio, hora_fim, assunto, status } = req.body;
 
-  if (!cliente_id || !prestador_id || !data_agendamento || !hora_inicio || !hora_fim) {
-    return res.status(400).json({ message: 'Os campos cliente_id, prestador_id, data_agendamento, hora_inicio e hora_fim são obrigatórios.' });
+  if (!cliente_telefone || !cliente_nome || !prestador_id || !data_agendamento || !hora_inicio || !hora_fim) {
+    return res.status(400).json({ message: 'Os campos cliente_telefone, cliente_nome, prestador_id, data_agendamento, hora_inicio e hora_fim são obrigatórios.' });
   }
 
   try {
+
+    // Verifica se o usuário já existe
+    const queryCheckUser = `
+      SELECT id as usuario_id
+      FROM agenda.usuarios
+      WHERE telefone = $1
+        AND tipo_usuario = 'cliente'
+        AND ativo = true;
+    `;
+    const { rows: userRows } = await db.query(queryCheckUser, [cliente_telefone]);
+
+    let cliente_id;
+    if (userRows.length > 0) {
+      // Usuário encontrado, usa o id existente
+      cliente_id = userRows[0].usuario_id;
+    } else {
+      // Usuário não encontrado, cria um novo usuário
+      const queryInsertUser = `
+        INSERT INTO agenda.usuarios
+          (id, nome, senha, telefone, ativo, tipo_usuario, criado_em, atualizado_em)
+        VALUES
+          (nextval('agenda.usuarios_id_seq'::regclass), $1, 'NonePassword', $2, true, 'cliente', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING id;
+      `;
+      const { rows: newUserRows } = await db.query(queryInsertUser, [cliente_nome, cliente_telefone]);
+      cliente_id = newUserRows[0].id;
+    }
+
     // Mapeamento de números para dias da semana em português
     const diasSemanaMap = {
       0: "domingo",

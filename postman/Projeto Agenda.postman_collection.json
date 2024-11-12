@@ -334,7 +334,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 53,\r\n  \"data_agendamento\": \"2024-11-07\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 53,\r\n  \"data_agendamento\": \"2024-11-07\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
