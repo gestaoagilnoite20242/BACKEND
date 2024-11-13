@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "015aa0cf-5438-4971-85d6-6fc65397e1bc",
+		"_postman_id": "0081d930-af3a-4652-b997-ba3561ae3fb5",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38317233"
@@ -334,7 +334,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 74,\r\n  \"data_agendamento\": \"2024-11-08\",\r\n  \"hora_inicio\": \"12:00\",\r\n  \"hora_fim\": \"12:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 74,\r\n  \"data_agendamento\": \"2024-11-08\",\r\n  \"hora_inicio\": \"13:00\",\r\n  \"hora_fim\": \"13:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -426,13 +426,43 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/114",
+					"raw": "{{base_url}}/agendamentos/116",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"114"
+						"116"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter prestador por id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/prestador/74",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"prestador",
+						"74"
 					]
 				}
 			},
@@ -444,7 +474,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8uY2FyZG9zbzRAZXhhbXBsZS5jb20iLCJ0aXBvVXN1YXJpbyI6InByZXN0YWRvciAgICAgICAgICAgIiwiaWF0IjoxNzMxNDI1NDk3LCJleHAiOjE3MzE1MTE4OTd9.vcM-CkldVuo2kV9ytGG_ouR8DINzJt9n2KtrtzyaJ3Q",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE0NjEyOTQsImV4cCI6MTczMTU0NzY5NH0.ftOtn7xNvrSVyyx3XaXbWHwtei1vBqdDmIJkfOFhcDY",
 				"type": "string"
 			}
 		]

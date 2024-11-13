@@ -9,6 +9,7 @@ const managementRoutes = require("./routes/managerRoutes");
 const agendamentosRoutes = require("./routes/agendamentosRoutes");
 const disponibilidadeRoutes = require("./routes/disponibilidadeRoutes");
 const categoriasRoutes = require("./routes/categoriasRoutes");
+const prestadorRoutes = require("./routes/prestadorRoutes");
 const { testConnection } = require("./config/db"); // Importa a função de teste de conexão
 
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/gestao/api/management", authRoutes);
 app.use("/gestao/api/management", managementRoutes);
 app.use("/gestao/api/management", categoriasRoutes);
+app.use("/gestao/api/management", prestadorRoutes);
 app.use("/gestao/api/management", protect, agendamentosRoutes);
 app.use("/gestao/api/management", protect, disponibilidadeRoutes);
 
