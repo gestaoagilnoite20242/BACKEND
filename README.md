@@ -4,7 +4,7 @@
 
 ## Descrição:
 
-**Projeto Agenda** é uma API que tem por objetivo...
+**Projeto Agenda** é uma API que tem por objetivo permitir que prestadores de serviço possam divulgar seu trabalho e organizar a agenda de seus compromissos, de modo que os usuários do aplicativo possam verificar os serviços oferecidos, consultar horários disponíveis dos profissionais e agendar horários com os mesmos.
 
 ---
 
@@ -12,15 +12,16 @@
 
 **Prestador de serviço**
 
-- Funcionalidade 1.
-- Funcionalidade 1.
-- Funcionalidade 1.
+- Pode cadastrar seus serviços, informando categoria e disponibilidade de horários.
+- Pode consultar sua agenda de modo dinâmico, verificando todos os agendamentos futuros e também para as próximas duas horas.
+- Pode consultar seu histórico de agendamentos, consultando todas os seus compromissos já marcados.
 
 **Usuário**
 
-- Funcionalidade 1.
-- Funcionalidade 1.
-- Funcionalidade 1.
+- Pode consultar todas as categorias de serviço disponibilizadas e também os prestadores disponíveis por categoria, com informação da disponibilidade de cada prestador.
+- Pode solicitar um agendamento de horário com o prestador.
+- Pode atualizar os dados de um agendamento.
+- Pode solicitar a exclusão de um agendamento.
 
 ---
 
@@ -68,7 +69,7 @@ DB_SCHEMA=agenda
 
 7 - Caso a conexão com o banco de dados for bem-sucedida, aparecerá uma mensagem de êxito no terminal, e você poderá testar os endpoints no Postman.
 
-8 - Na raiz do projeto, existe uma coleção do Postman que será utilizada para testagem dos endpoints. Importe esta coleção para dentro do Postman e interaja com os endpoints conforme descrição abaixo.
+8 - Na raiz do projeto, existe uma coleção do Postman que será utilizada para testagem dos endpoints. Importe esta coleção para dentro do Postman e interaja com os endpoints conforme descrição abaixo. (ATENÇÃO: será necessário executar a rota de Login para geração de um Bearer Token, que será utilizado para acessar os endpoints de número 4, 5, 6, 7, 8, 9, 10, 11, 14 e 15, conforme abaixo - os demais não necessitam de autenticação).
 
 ---
 
@@ -78,18 +79,18 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
 
 1.  **Endpoint de Registro de Prestador**:
 
-    - **Endpoint:** POST api/management/register
+    - **Endpoint:** POST /register
     - **Descrição**: Este endpoint é utilizado para cadastrar um novo prestador na plataforma. Ele requer informações detalhadas sobre o prestador, como nome, e-mail, senha, CPF/CNPJ, atividade, serviços oferecidos, etc.
 
     - **Corpo da requisição:**:
 
     ```json
     {
-      "nome": "Rosi Cardoso",
-      "email": "rosi.cardoso99@example.com",
+      "nome": "João Rosa",
+      "email": "joao.rosa.sbardelotto@example.com",
       "senha": "senhaSegura123",
-      "telefone": "11999999999",
-      "cpf_cnpj": "1234429923423401",
+      "telefone": "51999989991",
+      "cpf_cnpj": "60000100001",
       "atividade": "Professora",
       "servico": "Aulas particulares",
       "logo_base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string",
@@ -110,6 +111,21 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
           "dia_semana": "terça",
           "hora_inicio": "08:00:00",
           "hora_fim": "18:00:00"
+        },
+        {
+          "dia_semana": "quarta",
+          "hora_inicio": "08:00:00",
+          "hora_fim": "18:00:00"
+        },
+        {
+          "dia_semana": "quinta",
+          "hora_inicio": "08:00:00",
+          "hora_fim": "18:00:00"
+        },
+        {
+          "dia_semana": "sexta",
+          "hora_inicio": "08:00:00",
+          "hora_fim": "18:00:00"
         }
       ],
       "categoria_id": 1,
@@ -123,39 +139,67 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
     ```json
     {
       "message": "Prestador cadastrado com sucesso!",
-      "prestador": {
-        "id": 182,
-        "nome": "Rosi Cardoso",
-        "email": "rosi.cardoso99@example.com",
-        "senha": "$2a$08$U2coS.O2tBmWooPjAGFdSuezX..xuAGEXlQQDpPNIGz0h09i3.Tge",
-        "telefone": "11999999999",
-        "tipo_usuario": "prestador           ",
-        "cidade_id": 4854,
-        "criado_em": "2024-10-28T23:12:48.204Z",
-        "atualizado_em": null,
-        "ativo": true,
-        "usuario_id": 335,
-        "cpf_cnpj": "1234429923423401",
-        "atividade": "Professora",
-        "services": "Aulas particulares",
-        "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string",
-        "instagram": "https://instagram.com/RosiRosi",
-        "website": "https://Rosi.com.br",
-        "listado": true,
-        "tipo_agenda": null,
-        "subcategoria_id": 2,
-        "categoria_id": 1,
-        "prestador_id": 62,
-        "dia_semana": "segunda             ",
-        "hora_inicio": "08:00:00",
-        "hora_fim": "18:00:00"
-      }
+      "resRows": [
+        {
+          "usuario": {
+            "id": 401,
+            "nome": "João Rosa",
+            "email": "joao.rosa.sbardelotto@example.com",
+            "telefone": "51999989991",
+            "tipo_usuario": "prestador           "
+          },
+          "prestador": {
+            "id": 90,
+            "cpf_cnpj": "60000100001",
+            "atividade": "Professora",
+            "tipo_agenda": null,
+            "services": "Aulas particulares",
+            "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string",
+            "instagram": "https://instagram.com/RosiRosi",
+            "website": "https://Rosi.com.br"
+          },
+          "cidade": {
+            "id": 4855
+          },
+          "categoria": {
+            "id": 1,
+            "subcategoria_id": 2
+          },
+          "ritmoTrabalho": [
+            {
+              "dia_semana": "segunda             ",
+              "hora_inicio": "08:00:00",
+              "hora_fim": "18:00:00"
+            },
+            {
+              "dia_semana": "terça               ",
+              "hora_inicio": "08:00:00",
+              "hora_fim": "18:00:00"
+            },
+            {
+              "dia_semana": "quarta              ",
+              "hora_inicio": "08:00:00",
+              "hora_fim": "18:00:00"
+            },
+            {
+              "dia_semana": "quinta              ",
+              "hora_inicio": "08:00:00",
+              "hora_fim": "18:00:00"
+            },
+            {
+              "dia_semana": "sexta               ",
+              "hora_inicio": "08:00:00",
+              "hora_fim": "18:00:00"
+            }
+          ]
+        }
+      ]
     }
     ```
 
 2.  **Login**:
 
-    - **Endpoint:** POST api/management/login
+    - **Endpoint:** POST /login
 
     - **Descrição**: Este endpoint é utilizado para realizar o login de um prestador já cadastrado. Após um login bem-sucedido, o sistema retorna um token JWT e um refresh token, que podem ser usados para autenticação.
 
@@ -167,8 +211,6 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
       "password": "senhaSegura123"
     }
     ```
-
-    {
 
     - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
 
@@ -193,7 +235,7 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
 
 3.  **Reset de Senha**:
 
-    - **Endpoint:** GET api/management/reset-password
+    - **Endpoint:** POST /reset-password
 
     - **Descrição**: Este endpoint é utilizado para resetar a senha de um prestador já cadastrado. Recebe o email do usuário para verificar se ele existe no sistema, e também recebe a nova senha que será armazenada.
 
@@ -445,8 +487,41 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
     ```json
     {
       "message": "Agendamentos obtidos com sucesso!",
-      "count": 0,
-      "agendamentos": []
+      "count": 1,
+      "totalRegistros": 1,
+      "totalPaginas": 1,
+      "currentPage": 1,
+      "agendamentos": [
+        {
+          "agendamento": {
+            "id": 115,
+            "data_agendamento": "2024-11-08T03:00:00.000Z",
+            "hora_inicio": "12:00:00",
+            "hora_fim": "12:30:00",
+            "assunto": "Consulta de rotina",
+            "status": "pendente            ",
+            "criado_em": "2024-11-12T21:12:26.824Z",
+            "atualizado_em": "2024-11-12T21:12:26.824Z"
+          },
+          "cliente": {
+            "id": 334,
+            "nome": "Jorge",
+            "email": null,
+            "telefone": "51999999997"
+          },
+          "prestador": {
+            "id": 74,
+            "nome": "João Rosa",
+            "email": "joao.rosa@example.com",
+            "telefone": "51999999991",
+            "cpf_cnpj": "60000000001",
+            "atividade": "Professora",
+            "services": "Aulas particulares",
+            "instagram": "https://instagram.com/RosiRosi",
+            "website": "https://Rosi.com.br"
+          }
+        }
+      ]
     }
     ```
 
@@ -582,6 +657,244 @@ A aplicação oferece os seguintes endpoints para interação com o sistema:
         }
       }
       ```
+
+11. **Obter agendamentos por id de prestador das proximas duas horas**:
+
+    - **Endpoint:** GET /agendamentosNextHours/{idPrestador}
+
+    - **Descrição**: Esse endpoint permite consultar os agendamentos do prestador para as próximas duas horas seguintes ao momento da requisição.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    Não é necessário
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+      ```json
+      {
+        "message": "Agendamento obtido com sucesso!",
+        "count": 0,
+        "agendamentos": []
+      }
+      ```
+
+12. **Obter categorias de serviços**:
+
+    - **Endpoint:** GET /categorias/getall
+
+    - **Descrição**: Esse endpoint permite obter uma lista de todas categorias de serviço cadastradas no sistema.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    Não é necessário
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+      ```json
+      {
+        "message": "Categorias obtidas com sucesso!",
+        "count": 12,
+        "categorias": [
+          {
+            "id": 10,
+            "nome": "Administração e Imóveis",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 9,
+            "nome": "Animais de Estimação",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 8,
+            "nome": "Consultoria e Assessoria",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 6,
+            "nome": "Educação e Cursos",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 7,
+            "nome": "Eventos e Festas",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 11,
+            "nome": "Financeiro e Jurídico",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 12,
+            "nome": "Marketing e Comunicação",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 1,
+            "nome": "Reformas e Construção",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 3,
+            "nome": "Saúde e Bem-Estar",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 2,
+            "nome": "Serviços Domésticos",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 4,
+            "nome": "Tecnologia e Informática",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          },
+          {
+            "id": 5,
+            "nome": "Transporte e Mudanças",
+            "criado_em": "2024-10-26T18:50:37.331Z"
+          }
+        ]
+      }
+      ```
+
+13. **Obter prestadores por categoria de serviços**:
+
+    - **Endpoint:** GET /categorias/prestadores/{idCategoria}
+
+    - **Descrição**: Esse endpoint permite obter uma lista de todos prestadores cadastrados em uma determinada categoria de serviço cadastrada no sistema.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    Não é necessário
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+      ```json
+      {
+        "message": "Prestadores da categoria obtidos com sucesso!",
+        "count": 20,
+        "prestadores": [
+          {
+            "prestador": {
+              "id": 53,
+              "nome": "Marcelo Pereira",
+              "categoria": "Reformas e Construção",
+              "email": "marcelo@example.com",
+              "telefone": "51981838118",
+              "cidade": "Porto Alegre",
+              "estado": "Rio Grande do Sul",
+              "cpf_cnpj": "1234423923423402",
+              "atividade": "Desenvolvedor de Software",
+              "services": "Criação de sites e aplicações",
+              "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string",
+              "instagram": "https://www.linkedin.com/in/marcelopoars/",
+              "website": "https://www.marcelopereira.dev/",
+              "usuario_id": 313
+            }
+          },
+          {
+            "prestador": {
+              "id": 55,
+              "nome": "Gleisson",
+              "categoria": "Reformas e Construção",
+              "email": "gleisson@example.com",
+              "telefone": "51999303193",
+              "cidade": "São Paulo",
+              "estado": "São Paulo",
+              "cpf_cnpj": "1234423923523402",
+              "atividade": "Professora",
+              "services": "Aulas particulares",
+              "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string",
+              "instagram": "https://instagram.com/RosiRosi",
+              "website": "https://Rosi.com.br",
+              "usuario_id": 316
+            }
+          }
+        ]
+      }
+      ```
+
+14. **Atualizar agendamento no banco**:
+
+    - **Endpoint:** PUT /agendamentos/{idAgendamento}
+
+    - **Descrição**: Este endpoint permite atualizar os dados de um agendamento.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    {
+      "cliente_id": 300,
+      "prestador_id": 74,
+      "data_agendamento": "2024-11-18",
+      "hora_inicio": "08:00",
+      "hora_fim": "08:30",
+      "assunto": "Consulta de rotina",
+      "status": "pendente"
+    }
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+
+    ```json
+    {
+      "message": "Agendamento atualizado com sucesso!",
+      "agendamento": {
+        "agendamento": {
+          "data_agendamento": "2024-11-18T03:00:00.000Z",
+          "hora_inicio": "08:00:00",
+          "hora_fim": "08:30:00",
+          "assunto": "Consulta de rotina",
+          "status": "pendente            ",
+          "criado_em": "2024-11-17T00:09:40.821Z",
+          "atualizado_em": "2024-11-17T00:10:47.574Z"
+        }
+      }
+    }
+    ```
+
+15. **Soft delete de agendamentos**:
+
+    - **Endpoint:** DEL /agendamentos/{idAgendamento}
+
+    - **Descrição**: Este endpoint permite atualizar os dados de um agendamento.
+
+    - **Corpo da requisição:**:
+
+    ```json
+    Não é necessário.
+    ```
+
+    - **Resposta Esperada em Caso de Sucesso – HTTP Status 200 (OK)**
+
+    ```json
+    {
+      "message": "Agendamento cancelado com sucesso!",
+      "agendamento": {
+        "agendamento": {
+          "id": 163,
+          "data_agendamento": "2024-11-18T03:00:00.000Z",
+          "hora_inicio": "08:00:00",
+          "hora_fim": "08:30:00",
+          "assunto": "Consulta de rotina",
+          "status": "cancelado           ",
+          "criado_em": "2024-11-17T00:09:40.821Z",
+          "atualizado_em": "2024-11-17T00:14:32.746Z"
+        },
+        "cliente": {
+          "id": 300
+        },
+        "prestador": {
+          "id": 74
+        }
+      }
+    }
+    ```
 
 ---
 
