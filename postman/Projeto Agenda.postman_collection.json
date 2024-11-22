@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0081d930-af3a-4652-b997-ba3561ae3fb5",
+		"_postman_id": "3ad32c6a-a396-468e-9c1d-6b6df458800a",
 		"name": "Projeto Agenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "38317233"
+		"_exporter_id": "37237236"
 	},
 	"item": [
 		{
@@ -65,7 +65,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"nome\": \"João Rosa\",\r\n  \"email\": \"joao.rosa@example.com\",\r\n  \"senha\": \"senhaSegura123\",\r\n  \"telefone\": \"51999999991\",\r\n  \"cpf_cnpj\": \"60000000001\",\r\n  \"atividade\": \"Professora\",\r\n  \"servico\": \"Aulas particulares\",\r\n  \"logo_base64\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string\",\r\n  \"social_media\": \"https://instagram.com/RosiRosi\",\r\n  \"website\": \"https://Rosi.com.br\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": {\r\n    \"nome\": \"São Paulo\",\r\n    \"sigla\": \"SP\"\r\n  },\r\n  \"ritmo_trabalho\": [\r\n    {\r\n      \"dia_semana\": \"segunda\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"terça\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"quarta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },    \r\n    {\r\n      \"dia_semana\": \"quinta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },    \r\n    {\r\n      \"dia_semana\": \"sexta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    }\r\n  ],\r\n  \"categoria_id\": 1,\r\n  \"subcategoria_id\": 2,\r\n  \"tipo_agenda\": null\r\n}",
+					"raw": "{\r\n  \"nome\": \"João Rosa\",\r\n  \"email\": \"joao.rosa.sbardelotto@example.com\",\r\n  \"senha\": \"senhaSegura123\",\r\n  \"telefone\": \"51999989991\",\r\n  \"cpf_cnpj\": \"60000100001\",\r\n  \"atividade\": \"Professora\",\r\n  \"servico\": \"Aulas particulares\",\r\n  \"logo_base64\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...base64string\",\r\n  \"social_media\": \"https://instagram.com/RosiRosi\",\r\n  \"website\": \"https://Rosi.com.br\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": {\r\n    \"nome\": \"São Paulo\",\r\n    \"sigla\": \"SP\"\r\n  },\r\n  \"ritmo_trabalho\": [\r\n    {\r\n      \"dia_semana\": \"segunda\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"terça\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },\r\n    {\r\n      \"dia_semana\": \"quarta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },    \r\n    {\r\n      \"dia_semana\": \"quinta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    },    \r\n    {\r\n      \"dia_semana\": \"sexta\",\r\n      \"hora_inicio\": \"08:00:00\",\r\n      \"hora_fim\": \"18:00:00\"\r\n    }\r\n  ],\r\n  \"categoria_id\": 1,\r\n  \"subcategoria_id\": 2,\r\n  \"tipo_agenda\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,6 +90,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3ODk5NDQsImV4cCI6MTczMTg3NjM0NH0._6ZaFzRl69wbl4N6e94sAlyJw9rsAhMIHo6RC4wCjLU",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -102,23 +112,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentosFuturos/73?limit=5&offset=0",
+					"raw": "{{base_url}}/agendamentosFuturos/352",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentosFuturos",
-						"73"
-					],
-					"query": [
-						{
-							"key": "limit",
-							"value": "5"
-						},
-						{
-							"key": "offset",
-							"value": "0"
-						}
+						"352"
 					]
 				}
 			},
@@ -130,6 +130,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -142,13 +152,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/73?limit=500&offset=0",
+					"raw": "{{base_url}}/agendamentos/352?limit=500&offset=0",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"73"
+						"352"
 					],
 					"query": [
 						{
@@ -170,6 +180,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -200,6 +220,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -230,6 +260,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -330,11 +370,21 @@
 		{
 			"name": "Inserir agendamento no banco",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 74,\r\n  \"data_agendamento\": \"2024-11-08\",\r\n  \"hora_inicio\": \"13:00\",\r\n  \"hora_fim\": \"13:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_telefone\": \"51999999997\",\r\n  \"cliente_nome\": \"Jorge\",\r\n  \"prestador_id\": 74,\r\n  \"data_agendamento\": \"2024-11-18\",\r\n  \"hora_inicio\": \"13:00\",\r\n  \"hora_fim\": \"13:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -359,6 +409,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -387,11 +447,21 @@
 		{
 			"name": "Atualizar agendamento no banco",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 62,\r\n  \"data_agendamento\": \"2024-10-28\",\r\n  \"hora_inicio\": \"08:00\",\r\n  \"hora_fim\": \"08:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
+					"raw": "{\r\n  \"cliente_id\": 300,\r\n  \"prestador_id\": 74,\r\n  \"data_agendamento\": \"2024-11-18\",\r\n  \"hora_inicio\": \"08:00\",\r\n  \"hora_fim\": \"08:30\",\r\n  \"assunto\": \"Consulta de rotina\",\r\n  \"status\": \"pendente\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -399,13 +469,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/29315",
+					"raw": "{{base_url}}/agendamentos/163",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"29315"
+						"163"
 					]
 				}
 			},
@@ -414,6 +484,16 @@
 		{
 			"name": "Soft delete de agendamentos",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW8ucm9zYUBleGFtcGxlLmNvbSIsInRpcG9Vc3VhcmlvIjoicHJlc3RhZG9yICAgICAgICAgICAiLCJpYXQiOjE3MzE3OTAyODIsImV4cCI6MTczMTg3NjY4Mn0.TwWCztfTOna-7tKHTTEOOPDQGqleK5maDAmuH_wntHM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -426,13 +506,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/agendamentos/116",
+					"raw": "{{base_url}}/agendamentos/163",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"agendamentos",
-						"116"
+						"163"
 					]
 				}
 			},
